@@ -4,6 +4,8 @@ public class Duke {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         String userCommand;
+        String[] entireList = new String[100];
+        int counterList = 0;
         boolean isExit = false;
 
         String logo = " ____        _        \n"
@@ -25,6 +27,9 @@ public class Duke {
             if (userCommand.equals("list")) {
                 System.out.println("--------------------------------------------------");
                 System.out.println("Here is your list!");
+                for(int i=0; i<counterList; i++) {
+                    System.out.println((i+1) + ". " + entireList[i]);
+                }
                 System.out.println("--------------------------------------------------");
             } else if (userCommand.equals("blah")) {
                 System.out.println("--------------------------------------------------");
@@ -37,12 +42,20 @@ public class Duke {
                 System.out.println("--------------------------------------------------");
                 isExit = true;
             } else {
+                entireList[counterList] = userCommand;
+                counterList++;
+                System.out.println("--------------------------------------------------");
+                System.out.println("added: " + userCommand);
+                System.out.println("--------------------------------------------------");
+            }
+
+            /*else {
                 System.out.println("--------------------------------------------------");
                 System.out.println("Errr... I don't really understand what you are saying.");
                 System.out.println("Here is the list of commands that I can understand: ");
                 System.out.println("1) list\n2) blah\n3) bye");
                 System.out.println("--------------------------------------------------");
-            }
+            }*/
         }
     }
 }
