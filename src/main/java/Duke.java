@@ -12,6 +12,20 @@ public class Duke {
         }
     }
 
+    public static void printReplyForAddCommand(int counterList, String DASH_LINE, String s) {
+        System.out.println(DASH_LINE);
+        System.out.println("Got it! I've added this task: ");
+        System.out.println(s);
+        System.out.print("Now you have " + counterList + " task");
+        if (counterList == 1) {
+            System.out.print(" ");
+        } else {
+            System.out.print("s ");
+        }
+        System.out.println("in the list.");
+        System.out.println(DASH_LINE);
+    }
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         String userInput;
@@ -22,6 +36,11 @@ public class Duke {
         boolean isUnsure = false;
 
         //Constants
+        int LENGTH_OF_BY = 3; // or LENGTH_OF_AT
+        int LENGTH_OF_DONE = 4;
+        int LENGTH_OF_TODO = 4;
+        int LENGTH_OF_EVENT = 5;
+        int LENGTH_OF_DEADLINE = 8;
         String DASH_LINE = "--------------------------------------------------";
         String LOGO = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -69,7 +88,7 @@ public class Duke {
             }
 
             else if (userCommand.startsWith("done")) {
-                String taskNumString = userCommand.substring(4);
+                String taskNumString = userCommand.substring(LENGTH_OF_DONE);
                 int taskNumInt = Integer.parseInt(taskNumString.trim()) - 1;
 
                 //Valid "done" command
@@ -95,25 +114,14 @@ public class Duke {
                 //Valid "deadline" command
                 if(userCommand.contains("/by")){
                     int dividerPosition = userCommand.indexOf("/by");
-                    String userCommandName = userCommand.substring(9, dividerPosition).trim();
-                    String userCommandBy = userCommand.substring(dividerPosition + 4).trim();
+                    String userCommandName = userCommand.substring(LENGTH_OF_DEADLINE+1, dividerPosition).trim();
+                    String userCommandBy = userCommand.substring(dividerPosition + LENGTH_OF_BY+1).trim();
 
                     Deadline d = new Deadline(userCommandName, userCommandBy);
                     entireList[counterList] = d;
                     counterList++;
 
-                    System.out.println(DASH_LINE);
-                    System.out.println("Got it! I've added this task: ");
-                    System.out.println(d.toString());
-                    System.out.print("Now you have " + counterList + " task");
-                    if(counterList == 1) {
-                        System.out.print(" ");
-                    }
-                    else {
-                        System.out.print("s ");
-                    }
-                    System.out.println("in the list.");
-                    System.out.println(DASH_LINE);
+                    printReplyForAddCommand(counterList, DASH_LINE, d.toString());
                 }
 
                 //Invalid "deadline" command
@@ -127,25 +135,14 @@ public class Duke {
                 //Valid "Events" command
                 if(userCommand.contains("/at")){
                     int dividerPosition = userCommand.indexOf("/at");
-                    String userCommandName = userCommand.substring(6, dividerPosition).trim();
-                    String userCommandBy = userCommand.substring(dividerPosition + 4).trim();
+                    String userCommandName = userCommand.substring(LENGTH_OF_EVENT+1, dividerPosition).trim();
+                    String userCommandBy = userCommand.substring(dividerPosition + LENGTH_OF_BY+1).trim();
 
                     Events e = new Events(userCommandName, userCommandBy);
                     entireList[counterList] = e;
                     counterList++;
 
-                    System.out.println(DASH_LINE);
-                    System.out.println("Got it! I've added this task: ");
-                    System.out.println(e.toString());
-                    System.out.print("Now you have " + counterList + " task");
-                    if(counterList == 1) {
-                        System.out.print(" ");
-                    }
-                    else {
-                        System.out.print("s ");
-                    }
-                    System.out.println("in the list.");
-                    System.out.println(DASH_LINE);
+                    printReplyForAddCommand(counterList, DASH_LINE, e.toString());
                 }
 
                 //Invalid "Events" command
@@ -155,24 +152,13 @@ public class Duke {
             }
 
             else if(userCommand.startsWith("todo")) {
-                String userCommandName = userCommand.substring(5).trim();
+                String userCommandName = userCommand.substring(LENGTH_OF_TODO+1).trim();
 
                 ToDos t = new ToDos(userCommandName);
                 entireList[counterList] = t;
                 counterList++;
 
-                System.out.println(DASH_LINE);
-                System.out.println("Got it! I've added this task: ");
-                System.out.println(t.toString());
-                System.out.print("Now you have " + counterList + " task");
-                if(counterList == 1) {
-                    System.out.print(" ");
-                }
-                else {
-                    System.out.print("s ");
-                }
-                System.out.println("in the list.");
-                System.out.println(DASH_LINE);
+                printReplyForAddCommand(counterList, DASH_LINE, t.toString());
             }
 
             else if(userCommand.equals("?")) {
