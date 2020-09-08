@@ -2,6 +2,31 @@ import java.util.Scanner;
 
 public class Duke {
 
+    public static ToDos getToDos(int LENGTH_OF_TODO, String userCommand) {
+        String userCommandName = userCommand.substring(LENGTH_OF_TODO +1).trim();
+
+        ToDos t = new ToDos(userCommandName);
+        return t;
+    }
+
+    public static Events getEvents(int LENGTH_OF_BY, int LENGTH_OF_EVENT, String userCommand) {
+        int dividerPosition = userCommand.indexOf("/at");
+        String userCommandName = userCommand.substring(LENGTH_OF_EVENT +1, dividerPosition).trim();
+        String userCommandBy = userCommand.substring(dividerPosition + LENGTH_OF_BY +1).trim();
+
+        Events e = new Events(userCommandName, userCommandBy);
+        return e;
+    }
+
+    public static Deadline getDeadline(int LENGTH_OF_BY, int LENGTH_OF_DEADLINE, String userCommand) {
+        int dividerPosition = userCommand.indexOf("/by");
+        String userCommandName = userCommand.substring(LENGTH_OF_DEADLINE +1, dividerPosition).trim();
+        String userCommandBy = userCommand.substring(dividerPosition + LENGTH_OF_BY +1).trim();
+
+        Deadline d = new Deadline(userCommandName, userCommandBy);
+        return d;
+    }
+
     public static void printEntireList(Task[] list) {
         int i = 0;
         for(Task item: list) {
@@ -12,7 +37,7 @@ public class Duke {
         }
     }
 
-    public static void printReplyForAddCommand(int counterList, String DASH_LINE, String s) {
+    public static void replyToAddTask(int counterList, String DASH_LINE, String s) {
         System.out.println(DASH_LINE);
         System.out.println("Got it! I've added this task: ");
         System.out.println(s);
@@ -26,6 +51,13 @@ public class Duke {
         System.out.println(DASH_LINE);
     }
 
+    public static void replyToList(Task[] entireList, String DASH_LINE) {
+        System.out.println(DASH_LINE);
+        System.out.println("Here is your list!");
+        printEntireList(entireList);
+        System.out.println(DASH_LINE);
+    }
+
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         String userInput;
@@ -36,12 +68,12 @@ public class Duke {
         boolean isUnsure = false;
 
         //Constants
-        int LENGTH_OF_BY = 3; // or LENGTH_OF_AT
-        int LENGTH_OF_DONE = 4;
-        int LENGTH_OF_TODO = 4;
-        int LENGTH_OF_EVENT = 5;
-        int LENGTH_OF_DEADLINE = 8;
-        String DASH_LINE = "--------------------------------------------------";
+        final int LENGTH_OF_BY = 3; // or LENGTH_OF_AT
+        final int LENGTH_OF_DONE = 4;
+        final int LENGTH_OF_TODO = 4;
+        final int LENGTH_OF_EVENT = 5;
+        final int LENGTH_OF_DEADLINE = 8;
+        final String DASH_LINE = "--------------------------------------------------";
         String LOGO = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -60,10 +92,7 @@ public class Duke {
 
             if (userCommand.equals("list")) {
                 if(counterList > 0) {
-                    System.out.println(DASH_LINE);
-                    System.out.println("Here is your list!");
-                    printEntireList(entireList);
-                    System.out.println(DASH_LINE);
+                    replyToList(entireList, DASH_LINE);
                 }
 
                 else if(counterList == 0) {
@@ -113,15 +142,11 @@ public class Duke {
 
                 //Valid "deadline" command
                 if(userCommand.contains("/by")){
-                    int dividerPosition = userCommand.indexOf("/by");
-                    String userCommandName = userCommand.substring(LENGTH_OF_DEADLINE+1, dividerPosition).trim();
-                    String userCommandBy = userCommand.substring(dividerPosition + LENGTH_OF_BY+1).trim();
-
-                    Deadline d = new Deadline(userCommandName, userCommandBy);
+                    Deadline d = getDeadline(LENGTH_OF_BY, LENGTH_OF_DEADLINE, userCommand);
                     entireList[counterList] = d;
                     counterList++;
 
-                    printReplyForAddCommand(counterList, DASH_LINE, d.toString());
+                    replyToAddTask(counterList, DASH_LINE, d.toString());
                 }
 
                 //Invalid "deadline" command
@@ -134,15 +159,11 @@ public class Duke {
 
                 //Valid "Events" command
                 if(userCommand.contains("/at")){
-                    int dividerPosition = userCommand.indexOf("/at");
-                    String userCommandName = userCommand.substring(LENGTH_OF_EVENT+1, dividerPosition).trim();
-                    String userCommandBy = userCommand.substring(dividerPosition + LENGTH_OF_BY+1).trim();
-
-                    Events e = new Events(userCommandName, userCommandBy);
+                    Events e = getEvents(LENGTH_OF_BY, LENGTH_OF_EVENT, userCommand);
                     entireList[counterList] = e;
                     counterList++;
 
-                    printReplyForAddCommand(counterList, DASH_LINE, e.toString());
+                    replyToAddTask(counterList, DASH_LINE, e.toString());
                 }
 
                 //Invalid "Events" command
@@ -152,13 +173,11 @@ public class Duke {
             }
 
             else if(userCommand.startsWith("todo")) {
-                String userCommandName = userCommand.substring(LENGTH_OF_TODO+1).trim();
-
-                ToDos t = new ToDos(userCommandName);
+                ToDos t = getToDos(LENGTH_OF_TODO, userCommand);
                 entireList[counterList] = t;
                 counterList++;
 
-                printReplyForAddCommand(counterList, DASH_LINE, t.toString());
+                replyToAddTask(counterList, DASH_LINE, t.toString());
             }
 
             else if(userCommand.equals("?")) {
