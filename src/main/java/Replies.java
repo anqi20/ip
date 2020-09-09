@@ -67,6 +67,14 @@ public class Replies {
         printDashLine();
     }
 
+    public static void printDoneDone(Task[] list) {
+        printDashLine();
+        System.out.println("You have already completed this task!");
+        System.out.println("This is the current list that you have: ");
+        printEntireList(list);
+        printDashLine();
+    }
+
     public static void printToAddTask(String s, int counterList) {
         printDashLine();
         System.out.println("Got it! I've added this task: ");
@@ -90,12 +98,16 @@ public class Replies {
         printDashLine();
     }
 
-    public static void printInvalid() {
+    public static void printFormattingInvalid() {
         printDashLine();
-        System.out.println("You must be confused! \u2719_\u2719");
-        System.out.println("Here is the list of commands that I can understand: ");
-        System.out.println("1) list\n2) blah\n3) todo...\n4) event... /at...\n5) deadline... /by...\n6) ?\n7)" +
-                " bye");
+        System.out.println("There's something wrong with your formatting!");
+        System.out.println("If you are unsure, use \"?\" to check the formatting. ");
+        printDashLine();
+    }
+
+    public static void printOutOfRange() {
+        printDashLine();
+        System.out.println("Oops, you have ran out of the limit!");
         printDashLine();
     }
 }
