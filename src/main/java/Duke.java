@@ -136,7 +136,7 @@ public class Duke {
             } catch (NullPointerException e) {
 
                 //Number task has exceeded the range
-                Replies.printDoneInvalid(entireList);
+                Replies.printNotInRange(entireList);
             }
 
         } else if (userCommand.toLowerCase().startsWith("done")) {
@@ -158,12 +158,22 @@ public class Duke {
             } catch (NullPointerException e) {
 
                 //Number task has exceeded the range
-                Replies.printDoneInvalid(entireList);
+                Replies.printNotInRange(entireList);
             }
 
         } else if (userCommand.toLowerCase().startsWith("delete")) {
 
-            delete(userCommand);
+            try {
+                delete(userCommand);
+            } catch (NumberFormatException e) {
+
+                //Number task was not given
+                Replies.printFormattingInvalid();
+            } catch (NullPointerException e) {
+
+                //Number task has exceeded the range
+                Replies.printNotInRange(entireList);
+            }
 
         } else if(userCommand.equals("?")) {
 

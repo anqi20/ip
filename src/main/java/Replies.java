@@ -59,14 +59,6 @@ public class Replies {
         printDashLine();
     }
 
-    public static void printDoneInvalid(Task[] list) {
-        printDashLine();
-        System.out.println("Errr... I don't think you have this item on the list.");
-        System.out.println("This is the current list that you have:");
-        printEntireList(list);
-        printDashLine();
-    }
-
     public static void printDoneDone(Task[] list) {
         printDashLine();
         System.out.println("You have already completed this task!");
@@ -122,6 +114,14 @@ public class Replies {
     public static void printOutOfRange() {
         printDashLine();
         System.out.println("Oops, you have ran out of the limit!");
+        printDashLine();
+    }
+
+    public static void printNotInRange(Task[] list) {
+        printDashLine();
+        System.out.println("Errr... I don't think you have this item on the list.");
+        System.out.println("This is the current list that you have:");
+        printEntireList(list);
         printDashLine();
     }
 }
