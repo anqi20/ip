@@ -75,6 +75,20 @@ public class Replies {
         printDashLine();
     }
 
+    public static void printDelete(String s, int counterList) {
+        printDashLine();
+        System.out.println("Okie! I've removed this task: ");
+        System.out.println(s);
+        System.out.print("Now you have " + counterList + " task");
+        if(counterList <= 1) {
+            System.out.print(" ");
+        } else {
+            System.out.print("s ");
+        }
+        System.out.println("in the list.");
+        printDashLine();
+    }
+
     public static void printToAddTask(String s, int counterList) {
         printDashLine();
         System.out.println("Got it! I've added this task: ");

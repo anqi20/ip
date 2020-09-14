@@ -8,11 +8,12 @@ public class Duke {
     //Constants
     static final int LENGTH_OF_BY = 3; // or LENGTH_OF_AT
     static final int LENGTH_OF_DONE = 4;
+    static final int LENGTH_OF_DELETE = 6;
     static final int LENGTH_OF_TODO = 4;
     static final int LENGTH_OF_EVENT = 5;
     static final int LENGTH_OF_DEADLINE = 8;
 
-    public static ToDos getToDos(int LENGTH_OF_TODO, String userCommand) {
+    public static ToDos getToDos(String userCommand) {
 
         String userCommandName = userCommand.substring(LENGTH_OF_TODO +1).trim();
 
@@ -20,7 +21,7 @@ public class Duke {
         return t;
     }
 
-    public static Events getEvents(int LENGTH_OF_BY, int LENGTH_OF_EVENT, String userCommand) {
+    public static Events getEvents(String userCommand) {
 
         int dividerPosition = userCommand.indexOf("/at");
         String userCommandName = userCommand.substring(LENGTH_OF_EVENT +1, dividerPosition).trim();
@@ -30,7 +31,7 @@ public class Duke {
         return e;
     }
 
-    public static Deadline getDeadline(int LENGTH_OF_BY, int LENGTH_OF_DEADLINE, String userCommand) {
+    public static Deadline getDeadline(String userCommand) {
 
         int dividerPosition = userCommand.indexOf("/by");
         String userCommandName = userCommand.substring(LENGTH_OF_DEADLINE + 1, dividerPosition).trim();
@@ -40,28 +41,42 @@ public class Duke {
         return d;
     }
 
-    public static void markAsDone(int LENGTH_OF_DONE, String userCommand, Task[] list) throws DukeException {
+    public static void markAsDone(String userCommand) throws DukeException {
 
         String taskNumString = userCommand.substring(LENGTH_OF_DONE);
         int taskNum = Integer.parseInt(taskNumString.trim()) - 1;
-        if(list[taskNum].isDone) {
+        if(entireList[taskNum].isDone) {
             throw new DukeException();
         }
-        list[taskNum].markAsDone();
-        Replies.printDoneValid(list, taskNum);
+        entireList[taskNum].markAsDone();
+        Replies.printDoneValid(entireList, taskNum);
     }
 
-    public static int addTasks(String userCommand, Task[] list, int counterList, int LENGTH_OF_BY,
-                               int LENGTH_OF_DEADLINE, int LENGTH_OF_EVENT, int LENGTH_OF_TODO)
-            throws DukeException {
+    public static void delete(String userCommand) {
+
+        String taskNumString = userCommand.substring(LENGTH_OF_DELETE);
+        int taskNum = Integer.parseInt(taskNumString.trim()) - 1;
+
+        Task t = entireList[taskNum];
+        for(int i=taskNum; i<=counterList; i++) {
+            entireList[i] = entireList[i+1];
+        }
+        entireList[counterList] = null;
+        counterList--;
+
+        Replies.printDelete(t.toString(), counterList);
+
+    }
+
+    public static int addTasks(String userCommand) throws DukeException {
 
         if(userCommand.toLowerCase().startsWith("deadline")) {
 
             if(!userCommand.contains("/by")) {
                 throw new DukeException();
             }
-            Deadline d = getDeadline(LENGTH_OF_BY, LENGTH_OF_DEADLINE, userCommand);
-            list[counterList] = d;
+            Deadline d = getDeadline(userCommand);
+            entireList[counterList] = d;
             counterList++;
             Replies.printToAddTask(d.toString(), counterList);
 
@@ -70,15 +85,15 @@ public class Duke {
             if(!userCommand.contains("/at")) {
                 throw new DukeException();
             }
-            Events e = getEvents(LENGTH_OF_BY, LENGTH_OF_EVENT, userCommand);
-            list[counterList] = e;
+            Events e = getEvents(userCommand);
+            entireList[counterList] = e;
             counterList++;
             Replies.printToAddTask(e.toString(), counterList);
 
         } else if (userCommand.toLowerCase().startsWith("todo")) {
 
-            ToDos t = getToDos(LENGTH_OF_TODO, userCommand);
-            list[counterList] = t;
+            ToDos t = getToDos(userCommand);
+            entireList[counterList] = t;
             counterList++;
             Replies.printToAddTask(t.toString(), counterList);
 
@@ -105,10 +120,29 @@ public class Duke {
             Replies.printBye();
             isExit = true;
 
+        } else if (userCommand.toLowerCase().startsWith("deadline") | userCommand.toLowerCase().startsWith("event") |
+                userCommand.toLowerCase().startsWith("todo")) {
+
+            try {
+                counterList = addTasks(userCommand);
+            } catch (DukeException | StringIndexOutOfBoundsException e){
+
+                //Wrong formatting was given
+                Replies.printFormattingInvalid();
+            } catch (ArrayIndexOutOfBoundsException e) {
+
+                //Over the limit of 100 tasks
+                Replies.printOutOfRange();
+            } catch (NullPointerException e) {
+
+                //Number task has exceeded the range
+                Replies.printDoneInvalid(entireList);
+            }
+
         } else if (userCommand.toLowerCase().startsWith("done")) {
 
             try {
-                markAsDone(LENGTH_OF_DONE, userCommand, entireList);
+                markAsDone(userCommand);
             } catch (DukeException e) {
 
                 //Task has already been completed
@@ -127,25 +161,10 @@ public class Duke {
                 Replies.printDoneInvalid(entireList);
             }
 
-        } else if (userCommand.toLowerCase().startsWith("deadline") | userCommand.toLowerCase().startsWith("event") |
-                userCommand.toLowerCase().startsWith("todo")) {
+        } else if (userCommand.toLowerCase().startsWith("delete")) {
 
-            try {
-                counterList = addTasks(userCommand, entireList, counterList, LENGTH_OF_BY, LENGTH_OF_DEADLINE,
-                        LENGTH_OF_EVENT, LENGTH_OF_TODO);
-            } catch (DukeException | StringIndexOutOfBoundsException e){
+            delete(userCommand);
 
-                //Wrong formatting was given
-                Replies.printFormattingInvalid();
-            } catch (ArrayIndexOutOfBoundsException e) {
-
-                //Over the limit of 100 tasks
-                Replies.printOutOfRange();
-            } catch (NullPointerException e) {
-
-                //Number task has exceeded the range
-                Replies.printDoneInvalid(entireList);
-            }
         } else if(userCommand.equals("?")) {
 
             Replies.printUnsure();
