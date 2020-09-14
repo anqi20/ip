@@ -125,54 +125,45 @@ public class Duke {
 
             try {
                 counterList = addTasks(userCommand);
+                
             } catch (DukeException | StringIndexOutOfBoundsException e){
+                Replies.printFormattingInvalid(); //Wrong formatting was given
 
-                //Wrong formatting was given
-                Replies.printFormattingInvalid();
             } catch (ArrayIndexOutOfBoundsException e) {
+                Replies.printOutOfRange(); //Over the limit of 100 tasks
 
-                //Over the limit of 100 tasks
-                Replies.printOutOfRange();
             } catch (NullPointerException e) {
-
-                //Number task has exceeded the range
-                Replies.printNotInRange(entireList);
+                Replies.printNotInRange(entireList); //Number task has exceeded the range
             }
 
         } else if (userCommand.toLowerCase().startsWith("done")) {
 
             try {
                 markAsDone(userCommand);
+
             } catch (DukeException e) {
+                Replies.printDoneDone(entireList); //Task has already been completed
 
-                //Task has already been completed
-                Replies.printDoneDone(entireList);
             } catch (NumberFormatException e) {
+                Replies.printFormattingInvalid(); //Number task was not given
 
-                //Number task was not given
-                Replies.printFormattingInvalid();
             } catch (ArrayIndexOutOfBoundsException e) {
+                Replies.printOutOfRange(); //Over the limit of 100 tasks
 
-                //Over the limit of 100 tasks
-                Replies.printOutOfRange();
             } catch (NullPointerException e) {
-
-                //Number task has exceeded the range
-                Replies.printNotInRange(entireList);
+                Replies.printNotInRange(entireList); //Number task has exceeded the range
             }
 
         } else if (userCommand.toLowerCase().startsWith("delete")) {
 
             try {
                 delete(userCommand);
+
             } catch (NumberFormatException e) {
+                Replies.printFormattingInvalid(); //Number task was not given
 
-                //Number task was not given
-                Replies.printFormattingInvalid();
             } catch (NullPointerException e) {
-
-                //Number task has exceeded the range
-                Replies.printNotInRange(entireList);
+                Replies.printNotInRange(entireList); //Number task has exceeded the range
             }
 
         } else if(userCommand.equals("?")) {
