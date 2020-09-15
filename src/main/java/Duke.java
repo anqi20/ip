@@ -3,7 +3,6 @@ import java.util.ArrayList;
 
 public class Duke {
     public static ArrayList<Task> entireList = new ArrayList<>();
-    //public static Task[] entireList = new Task[100];
     public static int counterList = 0;
     public static boolean isExit = false;
 
@@ -61,7 +60,7 @@ public class Duke {
 
         Task t = entireList.get(taskNum);
 
-        entireList.remove(taskNum); 
+        entireList.remove(taskNum);
         counterList--;
 
         Replies.printDelete(t.toString(), counterList);
@@ -128,10 +127,7 @@ public class Duke {
             } catch (DukeException | StringIndexOutOfBoundsException e){
                 Replies.printFormattingInvalid(); //Wrong formatting was given
 
-            } /*catch (IndexOutOfBoundsException e) {
-                Replies.printOutOfRange(); //Over the limit of 100 tasks
-
-            }*/ catch (NullPointerException e) {
+            } catch (NullPointerException e) {
                 Replies.printNotInRange(entireList); //Number task has exceeded the range
             }
 
@@ -146,10 +142,7 @@ public class Duke {
             } catch (NumberFormatException e) {
                 Replies.printFormattingInvalid(); //Number task was not given
 
-            } /*catch (IndexOutOfBoundsException e) {
-                Replies.printOutOfRange(); //Over the limit of 100 tasks
-
-            }*/ catch (NullPointerException e) {
+            } catch (NullPointerException e) {
                 Replies.printNotInRange(entireList); //Number task has exceeded the range
             }
 

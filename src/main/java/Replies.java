@@ -101,8 +101,15 @@ public class Replies {
         printDashLine();
         System.out.println("You must be confused! \u2719_\u2719");
         System.out.println("Here is the list of commands that I can understand: ");
-        System.out.println("1) list\n2) blah\n3) todo...\n4) event... /at...\n5) deadline... /by...\n6) ?\n7)" +
-                " bye");
+        System.out.println("1) list");
+        System.out.println("2) blah");
+        System.out.println("3) todo ...");
+        System.out.println("4) event ... /at ...");
+        System.out.println("5) deadline ... /by ...");
+        System.out.println("6) done ...");
+        System.out.println("7) delete ... ");
+        System.out.println("8) ?");
+        System.out.println("9) bye");
         printDashLine();
     }
 
@@ -110,12 +117,6 @@ public class Replies {
         printDashLine();
         System.out.println("There's something wrong with your formatting!");
         System.out.println("If you are unsure, use \"?\" to check the formatting. ");
-        printDashLine();
-    }
-
-    public static void printOutOfRange() {
-        printDashLine();
-        System.out.println("Oops, you have ran out of the limit!");
         printDashLine();
     }
 
