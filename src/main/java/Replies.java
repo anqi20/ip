@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Replies {
 
     public static void printDashLine(){
@@ -35,7 +37,7 @@ public class Replies {
         printDashLine();
     }
 
-    public static void printEntireList(Task[] list) {
+    public static void printEntireList(ArrayList<Task> list) {
         int i = 1;
         for(Task item: list) {
             if(item != null) {
@@ -45,21 +47,21 @@ public class Replies {
         }
     }
 
-    public static void printList (Task[] list) {
+    public static void printList (ArrayList<Task> list) {
         printDashLine();
         System.out.println("Here is your list!");
         printEntireList(list);
         printDashLine();
     }
 
-    public static void printDoneValid(Task[] list, int taskNum) {
+    public static void printDoneValid(ArrayList<Task> list, int taskNum) {
         printDashLine();
         System.out.println("Congratulations! You have completed: ");
-        System.out.println((taskNum + 1) + ". " + list[taskNum].toString());
+        System.out.println((taskNum + 1) + ". " + list.get(taskNum).toString());
         printDashLine();
     }
 
-    public static void printDoneDone(Task[] list) {
+    public static void printDoneDone(ArrayList<Task> list) {
         printDashLine();
         System.out.println("You have already completed this task!");
         System.out.println("This is the current list that you have: ");
@@ -117,7 +119,7 @@ public class Replies {
         printDashLine();
     }
 
-    public static void printNotInRange(Task[] list) {
+    public static void printNotInRange(ArrayList<Task> list) {
         printDashLine();
         System.out.println("Errr... I don't think you have this item on the list.");
         System.out.println("This is the current list that you have:");

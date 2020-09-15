@@ -1,7 +1,9 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Duke {
-    public static Task[] entireList = new Task[100];
+    public static ArrayList<Task> entireList = new ArrayList<>();
+    //public static Task[] entireList = new Task[100];
     public static int counterList = 0;
     public static boolean isExit = false;
 
@@ -45,10 +47,10 @@ public class Duke {
 
         String taskNumString = userCommand.substring(LENGTH_OF_DONE);
         int taskNum = Integer.parseInt(taskNumString.trim()) - 1;
-        if(entireList[taskNum].isDone) {
+        if(entireList.get(taskNum).isDone) {
             throw new DukeException();
         }
-        entireList[taskNum].markAsDone();
+        entireList.get(taskNum).markAsDone();
         Replies.printDoneValid(entireList, taskNum);
     }
 
@@ -57,15 +59,12 @@ public class Duke {
         String taskNumString = userCommand.substring(LENGTH_OF_DELETE);
         int taskNum = Integer.parseInt(taskNumString.trim()) - 1;
 
-        Task t = entireList[taskNum];
-        for(int i=taskNum; i<=counterList; i++) {
-            entireList[i] = entireList[i+1];
-        }
-        entireList[counterList] = null;
+        Task t = entireList.get(taskNum);
+
+        entireList.remove(taskNum); 
         counterList--;
 
         Replies.printDelete(t.toString(), counterList);
-
     }
 
     public static int addTasks(String userCommand) throws DukeException {
@@ -76,7 +75,7 @@ public class Duke {
                 throw new DukeException();
             }
             Deadline d = getDeadline(userCommand);
-            entireList[counterList] = d;
+            entireList.add(counterList, d);
             counterList++;
             Replies.printToAddTask(d.toString(), counterList);
 
@@ -86,14 +85,14 @@ public class Duke {
                 throw new DukeException();
             }
             Events e = getEvents(userCommand);
-            entireList[counterList] = e;
+            entireList.add(counterList, e);
             counterList++;
             Replies.printToAddTask(e.toString(), counterList);
 
         } else if (userCommand.toLowerCase().startsWith("todo")) {
 
             ToDos t = getToDos(userCommand);
-            entireList[counterList] = t;
+            entireList.add(counterList, t);
             counterList++;
             Replies.printToAddTask(t.toString(), counterList);
 
@@ -125,14 +124,14 @@ public class Duke {
 
             try {
                 counterList = addTasks(userCommand);
-                
+
             } catch (DukeException | StringIndexOutOfBoundsException e){
                 Replies.printFormattingInvalid(); //Wrong formatting was given
 
-            } catch (ArrayIndexOutOfBoundsException e) {
+            } /*catch (IndexOutOfBoundsException e) {
                 Replies.printOutOfRange(); //Over the limit of 100 tasks
 
-            } catch (NullPointerException e) {
+            }*/ catch (NullPointerException e) {
                 Replies.printNotInRange(entireList); //Number task has exceeded the range
             }
 
@@ -147,10 +146,10 @@ public class Duke {
             } catch (NumberFormatException e) {
                 Replies.printFormattingInvalid(); //Number task was not given
 
-            } catch (ArrayIndexOutOfBoundsException e) {
+            } /*catch (IndexOutOfBoundsException e) {
                 Replies.printOutOfRange(); //Over the limit of 100 tasks
 
-            } catch (NullPointerException e) {
+            }*/ catch (NullPointerException e) {
                 Replies.printNotInRange(entireList); //Number task has exceeded the range
             }
 
