@@ -21,28 +21,22 @@ public class Duke {
     static final int LENGTH_OF_EVENT = 5;
     static final int LENGTH_OF_DEADLINE = 8;
     static final int LENGTH_OF_INPUT_FORMAT = 6; //[✘][✓]
+    static final int LENGTH_OF_INPUT_DONE_STATUS = 4;
+    static final int TICK_HTML_CODE = 10003;
 
-//<<<<<<< HEAD
-//=======
     public static void fileReading (String filePath) throws FileNotFoundException {
         File f = new File(filePath);
         Scanner s = new Scanner (f);
 
         while(s.hasNext()) {
             String line = s.nextLine();
-
-            Integer taskDone = line.codePointAt(4);
+            Integer taskDone = line.codePointAt(LENGTH_OF_INPUT_DONE_STATUS);
 
             if(line.startsWith("[T]")) {
 
                 String userCommandName = line.substring(LENGTH_OF_INPUT_FORMAT +1).trim();
                 ToDos t = new ToDos(userCommandName);
                 entireList.add(counterList, t);
-                if (taskDone.equals(10003)) {
-                    entireList.get(counterList).markAsDone();
-                }
-                counterList++;
-
 
             } else if (line.startsWith("[E]")) {
 
@@ -51,10 +45,6 @@ public class Duke {
                 String userCommandBy = line.substring(dividerPosition + LENGTH_OF_BY +1, line.length()-1).trim();
                 Events e = new Events(userCommandName, userCommandBy);
                 entireList.add(counterList, e);
-                if (taskDone.equals(10003)) {
-                    entireList.get(counterList).markAsDone();
-                }
-                counterList++;
 
             } else if(line.startsWith("[D]")) {
 
@@ -63,15 +53,15 @@ public class Duke {
                 String userCommandBy = line.substring(dividerPosition + LENGTH_OF_BY +1, line.length()-1).trim();
                 Deadline d = new Deadline(userCommandName, userCommandBy);
                 entireList.add(counterList, d);
-                if (taskDone.equals(10003)) {
-                    entireList.get(counterList).markAsDone();
-                }
-                counterList++;
 
             } else {
                 //Invalid task found
                 Replies.printReadFileInvalid();
             }
+            if (taskDone.equals(TICK_HTML_CODE)) {
+                entireList.get(counterList).markAsDone();
+            }
+            counterList++;
         }
     }
 
@@ -94,13 +84,11 @@ public class Duke {
         fw.close();
     }
 
-//>>>>>>> branch-Level-7
     public static ToDos getToDos(String userCommand) {
 
         String userCommandName = userCommand.substring(LENGTH_OF_TODO +1).trim();
 
-        ToDos t = new ToDos(userCommandName);
-        return t;
+        return new ToDos(userCommandName);
     }
 
     public static Events getEvents(String userCommand) {
@@ -109,8 +97,7 @@ public class Duke {
         String userCommandName = userCommand.substring(LENGTH_OF_EVENT +1, dividerPosition).trim();
         String userCommandBy = userCommand.substring(dividerPosition + LENGTH_OF_BY +1).trim();
 
-        Events e = new Events(userCommandName, userCommandBy);
-        return e;
+        return new Events(userCommandName, userCommandBy);
     }
 
     public static Deadline getDeadline(String userCommand) {
@@ -119,8 +106,7 @@ public class Duke {
         String userCommandName = userCommand.substring(LENGTH_OF_DEADLINE + 1, dividerPosition).trim();
         String userCommandBy = userCommand.substring(dividerPosition + LENGTH_OF_BY + 1).trim();
 
-        Deadline d = new Deadline(userCommandName, userCommandBy);
-        return d;
+        return new Deadline(userCommandName, userCommandBy);
     }
 
     public static void markAsDone(String userCommand) throws DukeException {
@@ -143,7 +129,6 @@ public class Duke {
         Task t = entireList.get(taskNum);
         entireList.remove(taskNum);
         counterList--;
-
         Replies.printDelete(t.toString(), counterList);
     }
 
@@ -190,11 +175,9 @@ public class Duke {
             }
 
         } else if (userCommand.toLowerCase().equals("blah")) {
-
             Replies.printBlah();
 
         } else if (userCommand.toLowerCase().equals("bye")) {
-
             Replies.printBye();
             isExit = true;
 
@@ -242,13 +225,14 @@ public class Duke {
                 Replies.printNotInRange(entireList); //Number task has exceeded the range
             }
 
-        } else if(userCommand.equals("?")) {
-            Replies.printUnsure();
+        } else if(userCommand.equals("help")) {
+            Replies.printHelp();
 
         } else {
-            Replies.printUnsure();
+            Replies.printHelp();
         }
 
+        //Updating the file
         try {
             writeFile(filePath);
 

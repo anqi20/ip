@@ -97,7 +97,7 @@ public class Replies {
         printDashLine();
     }
 
-    public static void printUnsure() {
+    public static void printHelp() {
         printDashLine();
         System.out.println("You must be confused! \u2719_\u2719");
         System.out.println("Here is the list of commands that I can understand: ");
@@ -108,7 +108,7 @@ public class Replies {
         System.out.println("5) deadline ... /by ...");
         System.out.println("6) done ...");
         System.out.println("7) delete ... ");
-        System.out.println("8) ?");
+        System.out.println("8) help");
         System.out.println("9) bye");
         printDashLine();
     }
@@ -116,7 +116,7 @@ public class Replies {
     public static void printFormattingInvalid() {
         printDashLine();
         System.out.println("There's something wrong with your formatting!");
-        System.out.println("If you are unsure, use \"?\" to check the formatting. ");
+        System.out.println("If you are unsure, use \"help\" to check the formatting. ");
         printDashLine();
     }
 
