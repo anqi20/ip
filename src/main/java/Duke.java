@@ -1,12 +1,11 @@
 import java.util.Scanner;
-<<<<<<< HEAD
 import java.util.ArrayList;
-=======
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
->>>>>>> branch-Level-7
+
 
 public class Duke {
     public static ArrayList<Task> entireList = new ArrayList<>();
@@ -23,8 +22,8 @@ public class Duke {
     static final int LENGTH_OF_DEADLINE = 8;
     static final int LENGTH_OF_INPUT_FORMAT = 6; //[✘][✓]
 
-<<<<<<< HEAD
-=======
+//<<<<<<< HEAD
+//=======
     public static void fileReading (String filePath) throws FileNotFoundException {
         File f = new File(filePath);
         Scanner s = new Scanner (f);
@@ -38,9 +37,9 @@ public class Duke {
 
                 String userCommandName = line.substring(LENGTH_OF_INPUT_FORMAT +1).trim();
                 ToDos t = new ToDos(userCommandName);
-                entireList[counterList] = t;
+                entireList.add(counterList, t);
                 if (taskDone.equals(10003)) {
-                    entireList[counterList].markAsDone();
+                    entireList.get(counterList).markAsDone();
                 }
                 counterList++;
 
@@ -51,9 +50,9 @@ public class Duke {
                 String userCommandName = line.substring(LENGTH_OF_INPUT_FORMAT +1, dividerPosition).trim();
                 String userCommandBy = line.substring(dividerPosition + LENGTH_OF_BY +1, line.length()-1).trim();
                 Events e = new Events(userCommandName, userCommandBy);
-                entireList[counterList] = e;
+                entireList.add(counterList, e);
                 if (taskDone.equals(10003)) {
-                    entireList[counterList].markAsDone();
+                    entireList.get(counterList).markAsDone();
                 }
                 counterList++;
 
@@ -63,9 +62,9 @@ public class Duke {
                 String userCommandName = line.substring(LENGTH_OF_INPUT_FORMAT +1, dividerPosition).trim();
                 String userCommandBy = line.substring(dividerPosition + LENGTH_OF_BY +1, line.length()-1).trim();
                 Deadline d = new Deadline(userCommandName, userCommandBy);
-                entireList[counterList] = d;
+                entireList.add(counterList, d);
                 if (taskDone.equals(10003)) {
-                    entireList[counterList].markAsDone();
+                    entireList.get(counterList).markAsDone();
                 }
                 counterList++;
 
@@ -79,10 +78,9 @@ public class Duke {
     public static void readFile() {
         try {
             fileReading(filePath);
-        } catch (FileNotFoundException e) {
 
-            //File cannot be found
-            Replies.printReadFileError();
+        } catch (FileNotFoundException e) {
+            Replies.printReadFileError(); //File cannot be found
         }
     }
 
@@ -96,7 +94,7 @@ public class Duke {
         fw.close();
     }
 
->>>>>>> branch-Level-7
+//>>>>>>> branch-Level-7
     public static ToDos getToDos(String userCommand) {
 
         String userCommandName = userCommand.substring(LENGTH_OF_TODO +1).trim();
@@ -129,7 +127,7 @@ public class Duke {
 
         String taskNumString = userCommand.substring(LENGTH_OF_DONE);
         int taskNum = Integer.parseInt(taskNumString.trim()) - 1;
-<<<<<<< HEAD
+
         if(entireList.get(taskNum).isDone) {
             throw new DukeException();
         }
@@ -143,22 +141,12 @@ public class Duke {
         int taskNum = Integer.parseInt(taskNumString.trim()) - 1;
 
         Task t = entireList.get(taskNum);
-
         entireList.remove(taskNum);
         counterList--;
 
         Replies.printDelete(t.toString(), counterList);
     }
 
-=======
-        if(entireList[taskNum].isDone) {
-            throw new DukeException();
-        }
-        entireList[taskNum].markAsDone();
-        Replies.printDoneValid(entireList, taskNum);
-    }
-
->>>>>>> branch-Level-7
     public static int addTasks(String userCommand) throws DukeException {
 
         if(userCommand.toLowerCase().startsWith("deadline")) {
@@ -167,11 +155,7 @@ public class Duke {
                 throw new DukeException();
             }
             Deadline d = getDeadline(userCommand);
-<<<<<<< HEAD
             entireList.add(counterList, d);
-=======
-            entireList[counterList] = d;
->>>>>>> branch-Level-7
             counterList++;
             Replies.printToAddTask(d.toString(), counterList);
 
@@ -181,27 +165,18 @@ public class Duke {
                 throw new DukeException();
             }
             Events e = getEvents(userCommand);
-<<<<<<< HEAD
             entireList.add(counterList, e);
-=======
-            entireList[counterList] = e;
->>>>>>> branch-Level-7
             counterList++;
             Replies.printToAddTask(e.toString(), counterList);
 
         } else if (userCommand.toLowerCase().startsWith("todo")) {
 
             ToDos t = getToDos(userCommand);
-<<<<<<< HEAD
             entireList.add(counterList, t);
-=======
-            entireList[counterList] = t;
->>>>>>> branch-Level-7
             counterList++;
             Replies.printToAddTask(t.toString(), counterList);
 
         }
-
         return counterList;
     }
 
@@ -240,10 +215,7 @@ public class Duke {
 
             try {
                 markAsDone(userCommand);
-<<<<<<< HEAD
 
-=======
->>>>>>> branch-Level-7
             } catch (DukeException e) {
                 Replies.printDoneDone(entireList); //Task has already been completed
 
@@ -257,12 +229,11 @@ public class Duke {
         } else if (userCommand.toLowerCase().startsWith("delete")) {
 
             try {
-<<<<<<< HEAD
                 delete(userCommand);
-=======
                 counterList = addTasks(userCommand);
+
             } catch (DukeException | StringIndexOutOfBoundsException e){
->>>>>>> branch-Level-7
+                Replies.printFormattingInvalid(); //Wrong formatting was given
 
             } catch (NumberFormatException e) {
                 Replies.printFormattingInvalid(); //Number task was not given
@@ -272,7 +243,6 @@ public class Duke {
             }
 
         } else if(userCommand.equals("?")) {
-
             Replies.printUnsure();
 
         } else {
@@ -281,10 +251,9 @@ public class Duke {
 
         try {
             writeFile(filePath);
-        } catch (IOException e) {
 
-            //Error when writing into the file
-            Replies.printWriteFileError();
+        } catch (IOException e) {
+            Replies.printWriteFileError(); //Error when writing into the file
         }
     }
 
