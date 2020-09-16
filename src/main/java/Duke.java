@@ -25,29 +25,41 @@ public class Duke {
         while(s.hasNext()) {
             String line = s.nextLine();
 
+            Integer taskDone = line.codePointAt(4);
+
             if(line.startsWith("[T]")) {
 
                 String userCommandName = line.substring(LENGTH_OF_INPUT_FORMAT +1).trim();
                 ToDos t = new ToDos(userCommandName);
                 entireList[counterList] = t;
+                if (taskDone.equals(10003)) {
+                    entireList[counterList].markAsDone();
+                }
                 counterList++;
+
 
             } else if (line.startsWith("[E]")) {
 
                 int dividerPosition = line.indexOf("(at:");
                 String userCommandName = line.substring(LENGTH_OF_INPUT_FORMAT +1, dividerPosition).trim();
-                String userCommandBy = line.substring(dividerPosition + LENGTH_OF_BY +1).trim();
+                String userCommandBy = line.substring(dividerPosition + LENGTH_OF_BY +1, line.length()-1).trim();
                 Events e = new Events(userCommandName, userCommandBy);
                 entireList[counterList] = e;
+                if (taskDone.equals(10003)) {
+                    entireList[counterList].markAsDone();
+                }
                 counterList++;
 
             } else if(line.startsWith("[D]")) {
 
                 int dividerPosition = line.indexOf("(by:");
                 String userCommandName = line.substring(LENGTH_OF_INPUT_FORMAT +1, dividerPosition).trim();
-                String userCommandBy = line.substring(dividerPosition + LENGTH_OF_BY +1).trim();
+                String userCommandBy = line.substring(dividerPosition + LENGTH_OF_BY +1, line.length()-1).trim();
                 Deadline d = new Deadline(userCommandName, userCommandBy);
                 entireList[counterList] = d;
+                if (taskDone.equals(10003)) {
+                    entireList[counterList].markAsDone();
+                }
                 counterList++;
 
             } else {
