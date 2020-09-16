@@ -127,4 +127,24 @@ public class Replies {
         printEntireList(list);
         printDashLine();
     }
+
+    public static void printReadFileError() {
+        printDashLine();
+        System.out.println("Oh man! An error has occurred when we try to read the file. ");
+        System.out.println("Please check again! ");
+        printDashLine();
+    }
+
+    public static void printReadFileInvalid() {
+        printDashLine();
+        System.out.println("Oops! Invalid task was detected!");
+        printDashLine();
+    }
+
+    public static void printWriteFileError() {
+        printDashLine();
+        System.out.println("Oh dear! An error has occurred when we try to write into the file. ");
+        System.out.println("Please check again! ");
+        printDashLine();
+    }
 }
