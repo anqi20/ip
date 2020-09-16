@@ -18,7 +18,7 @@ public class Duke {
     static final int LENGTH_OF_DEADLINE = 8;
     static final int LENGTH_OF_INPUT_FORMAT = 6; //[✘][✓]
 
-    public static void fileReading (String filePath) throws FileNotFoundException, DukeException {
+    public static void fileReading (String filePath) throws FileNotFoundException {
         File f = new File(filePath);
         Scanner s = new Scanner (f);
 
@@ -72,7 +72,9 @@ public class Duke {
     public static void readFile() {
         try {
             fileReading(filePath);
-        } catch (FileNotFoundException | DukeException e) {
+        } catch (FileNotFoundException e) {
+
+            //File cannot be found
             Replies.printReadFileError();
         }
     }
@@ -229,7 +231,9 @@ public class Duke {
         try {
             writeFile(filePath);
         } catch (IOException e) {
-            System.out.println("GG man JY!");
+
+            //Error when writing into the file
+            Replies.printWriteFileError();
         }
     }
 
