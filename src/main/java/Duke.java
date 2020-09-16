@@ -2,16 +2,19 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.Path;
+import java.nio.file.FileAlreadyExistsException;
 
 public class Duke {
     public static ArrayList<Task> entireList = new ArrayList<>();
     public static int counterList = 0;
     public static boolean isExit = false;
     public static String filePath = "docs/duke.txt";
+    public static String directoryPath = "docs";
 
     //Constants
     static final int LENGTH_OF_BY = 3; // or LENGTH_OF_AT
@@ -24,7 +27,16 @@ public class Duke {
     static final int LENGTH_OF_INPUT_DONE_STATUS = 4;
     static final int TICK_HTML_CODE = 10003;
 
-    public static void fileReading (String filePath) throws FileNotFoundException {
+    public static void fileReading (String filePath) throws IOException {
+        try {
+            Files.createDirectories(Paths.get(directoryPath));
+            Files.createFile(Path.of(filePath));
+
+        } catch (FileAlreadyExistsException e) {
+            //Ignore
+        }
+
+
         File f = new File(filePath);
         Scanner s = new Scanner (f);
 
@@ -69,8 +81,8 @@ public class Duke {
         try {
             fileReading(filePath);
 
-        } catch (FileNotFoundException e) {
-            Replies.printReadFileError(); //File cannot be found
+        } catch (IOException e) {
+            Replies.printReadFileError(); //Input file has an error
         }
     }
 
@@ -205,7 +217,7 @@ public class Duke {
             } catch (NumberFormatException e) {
                 Replies.printFormattingInvalid(); //Number task was not given
 
-            } catch (NullPointerException e) {
+            } catch (IndexOutOfBoundsException e) {
                 Replies.printNotInRange(entireList); //Number task has exceeded the range
             }
 
@@ -221,7 +233,7 @@ public class Duke {
             } catch (NumberFormatException e) {
                 Replies.printFormattingInvalid(); //Number task was not given
 
-            } catch (NullPointerException e) {
+            } catch (IndexOutOfBoundsException e) {
                 Replies.printNotInRange(entireList); //Number task has exceeded the range
             }
 
