@@ -1,9 +1,14 @@
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Duke {
     public static Task[] entireList = new Task[100];
     public static int counterList = 0;
     public static boolean isExit = false;
+    public static String filePath = "docs/duke.txt";
 
     //Constants
     static final int LENGTH_OF_BY = 3; // or LENGTH_OF_AT
@@ -11,8 +16,66 @@ public class Duke {
     static final int LENGTH_OF_TODO = 4;
     static final int LENGTH_OF_EVENT = 5;
     static final int LENGTH_OF_DEADLINE = 8;
+    static final int LENGTH_OF_INPUT_FORMAT = 6; //[✘][✓]
 
-    public static ToDos getToDos(int LENGTH_OF_TODO, String userCommand) {
+    public static void fileReading (String filePath) throws FileNotFoundException, DukeException {
+        File f = new File(filePath);
+        Scanner s = new Scanner (f);
+
+        while(s.hasNext()) {
+            String line = s.nextLine();
+
+            if(line.startsWith("[T]")) {
+
+                String userCommandName = line.substring(LENGTH_OF_INPUT_FORMAT +1).trim();
+                ToDos t = new ToDos(userCommandName);
+                entireList[counterList] = t;
+                counterList++;
+
+            } else if (line.startsWith("[E]")) {
+
+                int dividerPosition = line.indexOf("(at:");
+                String userCommandName = line.substring(LENGTH_OF_INPUT_FORMAT +1, dividerPosition).trim();
+                String userCommandBy = line.substring(dividerPosition + LENGTH_OF_BY +1).trim();
+                Events e = new Events(userCommandName, userCommandBy);
+                entireList[counterList] = e;
+                counterList++;
+
+            } else if(line.startsWith("[D]")) {
+
+                int dividerPosition = line.indexOf("(by:");
+                String userCommandName = line.substring(LENGTH_OF_INPUT_FORMAT +1, dividerPosition).trim();
+                String userCommandBy = line.substring(dividerPosition + LENGTH_OF_BY +1).trim();
+                Deadline d = new Deadline(userCommandName, userCommandBy);
+                entireList[counterList] = d;
+                counterList++;
+
+            } else {
+                //Invalid task found
+                Replies.printReadFileInvalid();
+            }
+        }
+    }
+
+    public static void readFile() {
+        try {
+            fileReading(filePath);
+        } catch (FileNotFoundException | DukeException e) {
+            Replies.printReadFileError();
+        }
+    }
+
+    public static void writeFile(String filePath) throws IOException {
+        FileWriter fw = new FileWriter(filePath);
+        for(Task item : entireList){
+            if(item != null) {
+                fw.write(item.toString() + System.lineSeparator());
+            }
+        }
+        fw.close();
+    }
+
+    public static ToDos getToDos(String userCommand) {
 
         String userCommandName = userCommand.substring(LENGTH_OF_TODO +1).trim();
 
@@ -20,7 +83,7 @@ public class Duke {
         return t;
     }
 
-    public static Events getEvents(int LENGTH_OF_BY, int LENGTH_OF_EVENT, String userCommand) {
+    public static Events getEvents(String userCommand) {
 
         int dividerPosition = userCommand.indexOf("/at");
         String userCommandName = userCommand.substring(LENGTH_OF_EVENT +1, dividerPosition).trim();
@@ -30,7 +93,7 @@ public class Duke {
         return e;
     }
 
-    public static Deadline getDeadline(int LENGTH_OF_BY, int LENGTH_OF_DEADLINE, String userCommand) {
+    public static Deadline getDeadline(String userCommand) {
 
         int dividerPosition = userCommand.indexOf("/by");
         String userCommandName = userCommand.substring(LENGTH_OF_DEADLINE + 1, dividerPosition).trim();
@@ -40,28 +103,26 @@ public class Duke {
         return d;
     }
 
-    public static void markAsDone(int LENGTH_OF_DONE, String userCommand, Task[] list) throws DukeException {
+    public static void markAsDone(String userCommand) throws DukeException {
 
         String taskNumString = userCommand.substring(LENGTH_OF_DONE);
         int taskNum = Integer.parseInt(taskNumString.trim()) - 1;
-        if(list[taskNum].isDone) {
+        if(entireList[taskNum].isDone) {
             throw new DukeException();
         }
-        list[taskNum].markAsDone();
-        Replies.printDoneValid(list, taskNum);
+        entireList[taskNum].markAsDone();
+        Replies.printDoneValid(entireList, taskNum);
     }
 
-    public static int addTasks(String userCommand, Task[] list, int counterList, int LENGTH_OF_BY,
-                               int LENGTH_OF_DEADLINE, int LENGTH_OF_EVENT, int LENGTH_OF_TODO)
-            throws DukeException {
+    public static int addTasks(String userCommand) throws DukeException {
 
         if(userCommand.toLowerCase().startsWith("deadline")) {
 
             if(!userCommand.contains("/by")) {
                 throw new DukeException();
             }
-            Deadline d = getDeadline(LENGTH_OF_BY, LENGTH_OF_DEADLINE, userCommand);
-            list[counterList] = d;
+            Deadline d = getDeadline(userCommand);
+            entireList[counterList] = d;
             counterList++;
             Replies.printToAddTask(d.toString(), counterList);
 
@@ -70,15 +131,15 @@ public class Duke {
             if(!userCommand.contains("/at")) {
                 throw new DukeException();
             }
-            Events e = getEvents(LENGTH_OF_BY, LENGTH_OF_EVENT, userCommand);
-            list[counterList] = e;
+            Events e = getEvents(userCommand);
+            entireList[counterList] = e;
             counterList++;
             Replies.printToAddTask(e.toString(), counterList);
 
         } else if (userCommand.toLowerCase().startsWith("todo")) {
 
-            ToDos t = getToDos(LENGTH_OF_TODO, userCommand);
-            list[counterList] = t;
+            ToDos t = getToDos(userCommand);
+            entireList[counterList] = t;
             counterList++;
             Replies.printToAddTask(t.toString(), counterList);
 
@@ -108,7 +169,7 @@ public class Duke {
         } else if (userCommand.toLowerCase().startsWith("done")) {
 
             try {
-                markAsDone(LENGTH_OF_DONE, userCommand, entireList);
+                markAsDone(userCommand);
             } catch (DukeException e) {
 
                 //Task has already been completed
@@ -131,8 +192,7 @@ public class Duke {
                 userCommand.toLowerCase().startsWith("todo")) {
 
             try {
-                counterList = addTasks(userCommand, entireList, counterList, LENGTH_OF_BY, LENGTH_OF_DEADLINE,
-                        LENGTH_OF_EVENT, LENGTH_OF_TODO);
+                counterList = addTasks(userCommand);
             } catch (DukeException | StringIndexOutOfBoundsException e){
 
                 //Wrong formatting was given
@@ -153,6 +213,12 @@ public class Duke {
         } else {
             Replies.printUnsure();
         }
+
+        try {
+            writeFile(filePath);
+        } catch (IOException e) {
+            System.out.println("GG man JY!");
+        }
     }
 
     public static void main(String[] args) {
@@ -161,6 +227,8 @@ public class Duke {
 
         //Greetings
         Replies.printGreetings();
+
+        readFile();
 
         while(!isExit) {
             userInput = in.nextLine();

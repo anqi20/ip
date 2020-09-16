@@ -110,4 +110,17 @@ public class Replies {
         System.out.println("Oops, you have ran out of the limit!");
         printDashLine();
     }
+
+    public static void printReadFileError() {
+        printDashLine();
+        System.out.println("Oh man! There is something wrong with the input file. ");
+        System.out.println("Please check again! ");
+        printDashLine();
+    }
+
+    public static void printReadFileInvalid() {
+        printDashLine();
+        System.out.println("Oops! Invalid task was detected!");
+        printDashLine();
+    }
 }
