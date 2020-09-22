@@ -13,8 +13,8 @@ public class Duke {
     public static ArrayList<Task> entireList = new ArrayList<>();
     public static int counterList = 0;
     public static boolean isExit = false;
-    public static String filePath = "docs/duke.txt";
-    public static String directoryPath = "docs";
+    public static final String filePath = "data/duke.txt";
+    public static final String directoryPath = "data";
 
     //Constants
     static final int LENGTH_OF_BY = 3; // or LENGTH_OF_AT
@@ -33,7 +33,7 @@ public class Duke {
             Files.createFile(Path.of(filePath));
 
         } catch (FileAlreadyExistsException e) {
-            //Ignore
+            //As the file already exists in the Directory, there is no need to create another file again
         }
 
 
@@ -177,7 +177,7 @@ public class Duke {
         return counterList;
     }
 
-    public static void loop(String userCommand) {
+    public static void run(String userCommand) {
         if (userCommand.toLowerCase().equals("list")) {
 
             if(counterList == 0) {
@@ -227,11 +227,8 @@ public class Duke {
                 delete(userCommand);
                 counterList = addTasks(userCommand);
 
-            } catch (DukeException | StringIndexOutOfBoundsException e){
+            } catch (DukeException | StringIndexOutOfBoundsException | NumberFormatException e){
                 Replies.printFormattingInvalid(); //Wrong formatting was given
-
-            } catch (NumberFormatException e) {
-                Replies.printFormattingInvalid(); //Number task was not given
 
             } catch (IndexOutOfBoundsException e) {
                 Replies.printNotInRange(entireList); //Number task has exceeded the range
@@ -266,7 +263,7 @@ public class Duke {
             userInput = in.nextLine();
             String userCommand = userInput.trim();
 
-            loop(userCommand);
+            run(userCommand);
 
         }
     }
