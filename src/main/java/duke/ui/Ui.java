@@ -1,6 +1,10 @@
+package duke.ui;
+
+import duke.task.Task;
+
 import java.util.ArrayList;
 
-public class Replies {
+public class Ui {
 
     public static void printDashLine(){
         System.out.println("--------------------------------------------------");
@@ -47,21 +51,21 @@ public class Replies {
         }
     }
 
-    public static void printList (ArrayList<Task> list) {
+    public static void printCurrentList(ArrayList<Task> list) {
         printDashLine();
         System.out.println("Here is your list!");
         printEntireList(list);
         printDashLine();
     }
 
-    public static void printDoneValid(ArrayList<Task> list, int taskNum) {
+    public static void printDone(ArrayList<Task> list, int taskNum) {
         printDashLine();
         System.out.println("Congratulations! You have completed: ");
         System.out.println((taskNum + 1) + ". " + list.get(taskNum).toString());
         printDashLine();
     }
 
-    public static void printDoneDone(ArrayList<Task> list) {
+    public static void printDoneWhenDone(ArrayList<Task> list) {
         printDashLine();
         System.out.println("You have already completed this task!");
         System.out.println("This is the current list that you have: ");
@@ -69,7 +73,7 @@ public class Replies {
         printDashLine();
     }
 
-    public static void printDelete(String s, int counterList) {
+    public static void printDeleteTask(String s, int counterList) {
         printDashLine();
         System.out.println("Okie! I've removed this task: ");
         System.out.println(s);
@@ -83,7 +87,7 @@ public class Replies {
         printDashLine();
     }
 
-    public static void printToAddTask(String s, int counterList) {
+    public static void printAddTask(String s, int counterList) {
         printDashLine();
         System.out.println("Got it! I've added this task: ");
         System.out.println(s);
@@ -120,7 +124,7 @@ public class Replies {
         printDashLine();
     }
 
-    public static void printNotInRange(ArrayList<Task> list) {
+    public static void printNumberNotInRange(ArrayList<Task> list) {
         printDashLine();
         System.out.println("Errr... I don't think you have this item on the list.");
         System.out.println("This is the current list that you have:");

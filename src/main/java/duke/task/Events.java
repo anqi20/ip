@@ -1,4 +1,6 @@
-public class Events extends Task{
+package duke.task;
+
+public class Events extends Task {
     protected String at;
 
     public Events (String description, String at) {

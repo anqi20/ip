@@ -1,3 +1,12 @@
+package duke;
+
+import duke.exception.DukeException;
+import duke.task.Deadline;
+import duke.task.Events;
+import duke.task.Task;
+import duke.task.ToDos;
+import duke.ui.Ui;
+
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -68,7 +77,7 @@ public class Duke {
 
             } else {
                 //Invalid task found
-                Replies.printReadFileInvalid();
+                Ui.printReadFileInvalid();
             }
             if (taskDone.equals(TICK_HTML_CODE)) {
                 entireList.get(counterList).markAsDone();
@@ -82,7 +91,7 @@ public class Duke {
             fileReading(filePath);
 
         } catch (IOException e) {
-            Replies.printReadFileError(); //Input file has an error
+            Ui.printReadFileError(); //Input file has an error
         }
     }
 
@@ -126,11 +135,11 @@ public class Duke {
         String taskNumString = userCommand.substring(LENGTH_OF_DONE);
         int taskNum = Integer.parseInt(taskNumString.trim()) - 1;
 
-        if(entireList.get(taskNum).isDone) {
+        if(entireList.get(taskNum).getStatus()) {
             throw new DukeException();
         }
         entireList.get(taskNum).markAsDone();
-        Replies.printDoneValid(entireList, taskNum);
+        Ui.printDone(entireList, taskNum);
     }
 
     public static void delete(String userCommand) {
@@ -141,7 +150,7 @@ public class Duke {
         Task t = entireList.get(taskNum);
         entireList.remove(taskNum);
         counterList--;
-        Replies.printDelete(t.toString(), counterList);
+        Ui.printDeleteTask(t.toString(), counterList);
     }
 
     public static int addTasks(String userCommand) throws DukeException {
@@ -154,7 +163,7 @@ public class Duke {
             Deadline d = getDeadline(userCommand);
             entireList.add(counterList, d);
             counterList++;
-            Replies.printToAddTask(d.toString(), counterList);
+            Ui.printAddTask(d.toString(), counterList);
 
         } else if (userCommand.toLowerCase().startsWith("event")) {
 
@@ -164,14 +173,14 @@ public class Duke {
             Events e = getEvents(userCommand);
             entireList.add(counterList, e);
             counterList++;
-            Replies.printToAddTask(e.toString(), counterList);
+            Ui.printAddTask(e.toString(), counterList);
 
         } else if (userCommand.toLowerCase().startsWith("todo")) {
 
             ToDos t = getToDos(userCommand);
             entireList.add(counterList, t);
             counterList++;
-            Replies.printToAddTask(t.toString(), counterList);
+            Ui.printAddTask(t.toString(), counterList);
 
         }
         return counterList;
@@ -181,16 +190,16 @@ public class Duke {
         if (userCommand.toLowerCase().equals("list")) {
 
             if(counterList == 0) {
-                Replies.printEmptyList();
+                Ui.printEmptyList();
             } else {
-                Replies.printList(entireList);
+                Ui.printCurrentList(entireList);
             }
 
         } else if (userCommand.toLowerCase().equals("blah")) {
-            Replies.printBlah();
+            Ui.printBlah();
 
         } else if (userCommand.toLowerCase().equals("bye")) {
-            Replies.printBye();
+            Ui.printBye();
             isExit = true;
 
         } else if (userCommand.toLowerCase().startsWith("deadline") | userCommand.toLowerCase().startsWith("event") |
@@ -200,10 +209,10 @@ public class Duke {
                 counterList = addTasks(userCommand);
 
             } catch (DukeException | StringIndexOutOfBoundsException e){
-                Replies.printFormattingInvalid(); //Wrong formatting was given
+                Ui.printFormattingInvalid(); //Wrong formatting was given
 
             } catch (NullPointerException e) {
-                Replies.printNotInRange(entireList); //Number task has exceeded the range
+                Ui.printNumberNotInRange(entireList); //Number task has exceeded the range
             }
 
         } else if (userCommand.toLowerCase().startsWith("done")) {
@@ -212,13 +221,13 @@ public class Duke {
                 markAsDone(userCommand);
 
             } catch (DukeException e) {
-                Replies.printDoneDone(entireList); //Task has already been completed
+                Ui.printDoneWhenDone(entireList); //duke.task.Task has already been completed
 
             } catch (NumberFormatException e) {
-                Replies.printFormattingInvalid(); //Number task was not given
+                Ui.printFormattingInvalid(); //Number task was not given
 
             } catch (IndexOutOfBoundsException e) {
-                Replies.printNotInRange(entireList); //Number task has exceeded the range
+                Ui.printNumberNotInRange(entireList); //Number task has exceeded the range
             }
 
         } else if (userCommand.toLowerCase().startsWith("delete")) {
@@ -228,17 +237,17 @@ public class Duke {
                 counterList = addTasks(userCommand);
 
             } catch (DukeException | StringIndexOutOfBoundsException | NumberFormatException e){
-                Replies.printFormattingInvalid(); //Wrong formatting was given
+                Ui.printFormattingInvalid(); //Wrong formatting was given
 
             } catch (IndexOutOfBoundsException e) {
-                Replies.printNotInRange(entireList); //Number task has exceeded the range
+                Ui.printNumberNotInRange(entireList); //Number task has exceeded the range
             }
 
         } else if(userCommand.equals("help")) {
-            Replies.printHelp();
+            Ui.printHelp();
 
         } else {
-            Replies.printHelp();
+            Ui.printHelp();
         }
 
         //Updating the file
@@ -246,7 +255,7 @@ public class Duke {
             writeFile(filePath);
 
         } catch (IOException e) {
-            Replies.printWriteFileError(); //Error when writing into the file
+            Ui.printWriteFileError(); //Error when writing into the file
         }
     }
 
@@ -255,7 +264,7 @@ public class Duke {
         String userInput;
 
         //Greetings
-        Replies.printGreetings();
+        Ui.printGreetings();
 
         readFile();
 

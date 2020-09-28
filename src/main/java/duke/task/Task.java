@@ -1,3 +1,5 @@
+package duke.task;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -10,6 +12,10 @@ public class Task {
     //returns tick or X symbols
     public String getStatusIcon() {
         return(isDone? "\u2713" : "\u2718");
+    }
+
+    public boolean getStatus() {
+        return isDone;
     }
 
     public String getDescription(){
