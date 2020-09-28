@@ -1,5 +1,7 @@
 package duke.task;
 
+import duke.constants.Constants;
+
 public class ToDos extends Task {
 
     public ToDos (String description) {
@@ -8,6 +10,6 @@ public class ToDos extends Task {
 
     @Override
     public String toString() {
-        return "[T]" + super.toString();
+        return Constants.PRINT_TODO + super.toString();
     }
 }

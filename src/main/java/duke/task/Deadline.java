@@ -1,5 +1,7 @@
 package duke.task;
 
+import duke.constants.Constants;
+
 public class Deadline extends Task {
     protected String by;
 
@@ -10,6 +12,6 @@ public class Deadline extends Task {
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        return Constants.PRINT_DEADLINE + super.toString() + " " + Constants.PRINT_DEADLINE_BY + " " + by + ")";
     }
 }

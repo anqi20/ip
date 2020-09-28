@@ -1,5 +1,7 @@
 package duke.task;
 
+import duke.constants.Constants;
+
 public class Events extends Task {
     protected String at;
 
@@ -10,6 +12,6 @@ public class Events extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (at: " + at + ")";
+        return Constants.PRINT_EVENT + super.toString() + " " + Constants.PRINT_EVENT_AT + " " + at + ")";
     }
 }
