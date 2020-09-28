@@ -2,6 +2,7 @@ package duke;
 
 import duke.constants.Constants;
 import duke.exception.DukeException;
+import duke.storage.Storage;
 import duke.task.Deadline;
 import duke.task.Events;
 import duke.task.Task;
@@ -11,89 +12,10 @@ import duke.ui.Ui;
 import java.util.Scanner;
 import java.util.ArrayList;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.Path;
-import java.nio.file.FileAlreadyExistsException;
-
 public class Duke {
     public static ArrayList<Task> entireList = new ArrayList<>();
-    public static int counterList = 0;
+    public static int numberOfTasks = 0;
     public static boolean isExit = false;
-    public static final String filePath = "data/duke.txt";
-    public static final String directoryPath = "data";
-
-    public static void fileReading (String filePath) throws IOException {
-        try {
-            Files.createDirectories(Paths.get(directoryPath));
-            Files.createFile(Path.of(filePath));
-
-        } catch (FileAlreadyExistsException e) {
-            //As the file already exists in the Directory, there is no need to create another file again
-        }
-
-
-        File f = new File(filePath);
-        Scanner s = new Scanner (f);
-
-        while(s.hasNext()) {
-            String line = s.nextLine();
-            Integer taskDone = line.codePointAt(Constants.LENGTH_OF_INPUT_DONE_STATUS);
-
-            if(line.startsWith(Constants.PRINT_TODO)) {
-
-                String userCommandName = line.substring(Constants.LENGTH_OF_INPUT_FORMAT +1).trim();
-                ToDos t = new ToDos(userCommandName);
-                entireList.add(counterList, t);
-
-            } else if (line.startsWith(Constants.PRINT_EVENT)) {
-
-                int dividerPosition = line.indexOf(Constants.PRINT_EVENT_AT);
-                String userCommandName = line.substring(Constants.LENGTH_OF_INPUT_FORMAT +1, dividerPosition).trim();
-                String userCommandBy = line.substring(dividerPosition + Constants.LENGTH_OF_BY +1, line.length()-1).trim();
-                Events e = new Events(userCommandName, userCommandBy);
-                entireList.add(counterList, e);
-
-            } else if(line.startsWith(Constants.PRINT_DEADLINE)) {
-
-                int dividerPosition = line.indexOf(Constants.PRINT_DEADLINE_BY);
-                String userCommandName = line.substring(Constants.LENGTH_OF_INPUT_FORMAT +1, dividerPosition).trim();
-                String userCommandBy = line.substring(dividerPosition + Constants.LENGTH_OF_BY +1, line.length()-1).trim();
-                Deadline d = new Deadline(userCommandName, userCommandBy);
-                entireList.add(counterList, d);
-
-            } else {
-                //Invalid task found
-                Ui.printReadFileInvalid();
-            }
-            if (taskDone.equals(Constants.TICK_HTML_CODE)) {
-                entireList.get(counterList).markAsDone();
-            }
-            counterList++;
-        }
-    }
-
-    public static void readFile() {
-        try {
-            fileReading(filePath);
-
-        } catch (IOException e) {
-            Ui.printReadFileError(); //Input file has an error
-        }
-    }
-
-    public static void writeFile(String filePath) throws IOException {
-        FileWriter fw = new FileWriter(filePath);
-        for(Task item : entireList){
-            if(item != null) {
-                fw.write(item.toString() + System.lineSeparator());
-            }
-        }
-        fw.close();
-    }
 
     public static ToDos getToDos(String userCommand) {
 
@@ -139,8 +61,8 @@ public class Duke {
 
         Task t = entireList.get(taskNum);
         entireList.remove(taskNum);
-        counterList--;
-        Ui.printDeleteTask(t.toString(), counterList);
+        numberOfTasks--;
+        Ui.printDeleteTask(t.toString(), numberOfTasks);
     }
 
     public static int addTasks(String userCommand) throws DukeException {
@@ -151,9 +73,9 @@ public class Duke {
                 throw new DukeException();
             }
             Deadline d = getDeadline(userCommand);
-            entireList.add(counterList, d);
-            counterList++;
-            Ui.printAddTask(d.toString(), counterList);
+            entireList.add(numberOfTasks, d);
+            numberOfTasks++;
+            Ui.printAddTask(d.toString(), numberOfTasks);
 
         } else if (userCommand.toLowerCase().startsWith(Constants.COMMAND_EVENT)) {
 
@@ -161,25 +83,25 @@ public class Duke {
                 throw new DukeException();
             }
             Events e = getEvents(userCommand);
-            entireList.add(counterList, e);
-            counterList++;
-            Ui.printAddTask(e.toString(), counterList);
+            entireList.add(numberOfTasks, e);
+            numberOfTasks++;
+            Ui.printAddTask(e.toString(), numberOfTasks);
 
         } else if (userCommand.toLowerCase().startsWith(Constants.COMMAND_TODO)) {
 
             ToDos t = getToDos(userCommand);
-            entireList.add(counterList, t);
-            counterList++;
-            Ui.printAddTask(t.toString(), counterList);
+            entireList.add(numberOfTasks, t);
+            numberOfTasks++;
+            Ui.printAddTask(t.toString(), numberOfTasks);
 
         }
-        return counterList;
+        return numberOfTasks;
     }
 
     public static void run(String userCommand) {
         if (userCommand.toLowerCase().equals(Constants.COMMAND_LIST)) {
 
-            if(counterList == 0) {
+            if(numberOfTasks == 0) {
                 Ui.printEmptyList();
             } else {
                 Ui.printCurrentList(entireList);
@@ -197,7 +119,7 @@ public class Duke {
                 userCommand.toLowerCase().startsWith(Constants.COMMAND_TODO)) {
 
             try {
-                counterList = addTasks(userCommand);
+                numberOfTasks = addTasks(userCommand);
 
             } catch (DukeException | StringIndexOutOfBoundsException e){
                 Ui.printFormattingInvalid(); //Wrong formatting was given
@@ -225,7 +147,7 @@ public class Duke {
 
             try {
                 delete(userCommand);
-                counterList = addTasks(userCommand);
+                numberOfTasks = addTasks(userCommand);
 
             } catch (DukeException | StringIndexOutOfBoundsException | NumberFormatException e){
                 Ui.printFormattingInvalid(); //Wrong formatting was given
@@ -241,13 +163,7 @@ public class Duke {
             Ui.printHelp();
         }
 
-        //Updating the file
-        try {
-            writeFile(filePath);
-
-        } catch (IOException e) {
-            Ui.printWriteFileError(); //Error when writing into the file
-        }
+        Storage.writeFile(entireList);
     }
 
     public static void main(String[] args) {
@@ -256,7 +172,7 @@ public class Duke {
 
         Ui.printGreetings();
 
-        readFile();
+        numberOfTasks = Storage.readFile(entireList, numberOfTasks);
 
         while(!isExit) {
             userInput = in.nextLine();
