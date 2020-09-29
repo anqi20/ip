@@ -56,13 +56,13 @@ public class Duke {
 
     public static void delete(String userCommand) {
 
-        String taskNumString = userCommand.substring(Constants.LENGTH_OF_DELETE);
-        int taskNum = Integer.parseInt(taskNumString.trim()) - 1;
-
-        Task t = entireList.get(taskNum);
-        entireList.remove(taskNum);
-        numberOfTasks--;
-        Ui.printDeleteTask(t.toString(), numberOfTasks);
+//        String taskNumString = userCommand.substring(Constants.LENGTH_OF_DELETE);
+//        int taskNum = Integer.parseInt(taskNumString.trim()) - 1;
+//
+//        Task t = entireList.get(taskNum);
+//        entireList.remove(taskNum);
+//        numberOfTasks--;
+//        Ui.printDeleteTask(t.toString(), numberOfTasks);
     }
 
     public static int addTasks(String userCommand) throws DukeException {
