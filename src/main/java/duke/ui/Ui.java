@@ -134,7 +134,7 @@ public class Ui {
 
     public static void printReadFileError() {
         printDashLine();
-        System.out.println("Oh man! An error has occurred when we try to read the file. ");
+        System.out.println("An error has occurred when we try to read the file. ");
         System.out.println("Please check again! ");
         printDashLine();
     }
@@ -147,7 +147,16 @@ public class Ui {
 
     public static void printWriteFileError() {
         printDashLine();
-        System.out.println("Oh dear! An error has occurred when we try to write into the file. ");
+        System.out.println("An error has occurred when we try to write into the file.");
+        System.out.println("Please check again! ");
+        printDashLine();
+    }
+
+    public static void printErrorMessage(String errorCommand) {
+        printDashLine();
+        System.out.print("Something went wrong when saving the results of your \"");
+        System.out.print(errorCommand);
+        System.out.println("\" command. ");
         System.out.println("Please check again! ");
         printDashLine();
     }

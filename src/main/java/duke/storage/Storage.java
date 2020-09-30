@@ -3,6 +3,7 @@ package duke.storage;
 import duke.constants.Constants;
 import duke.task.Deadline;
 import duke.task.Events;
+import duke.parser.Parser;
 import duke.task.Task;
 import duke.task.ToDos;
 import duke.ui.Ui;
@@ -18,31 +19,39 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
+    public static String filePath;
+    public static String directoryPath;
 
-    public static final String filePath = "data/duke.txt";
-    public static final String directoryPath = "data";
-
-    public static int readFile(ArrayList<Task> entireList, int numberOfTasks) {
-        try {
-            numberOfTasks = executeReadFile(entireList, numberOfTasks);
-
-        } catch (IOException e) {
-            Ui.printReadFileError(); //Input file has an error
-        }
-        return numberOfTasks;
+    public Storage(String filePath, String directoryPath) {
+        Storage.filePath = filePath;
+        Storage.directoryPath = directoryPath;
     }
 
-    public static void writeFile(ArrayList<Task> entireList) {
-        try {
-            executeWriteFile(filePath, entireList);
+//    public static ArrayList<Task> readFile(Parser parser) {
+//        ArrayList<Task> entireList = new ArrayList<>();
+//
+//        try {
+//            entireList = executeReadFile(parser);
+//
+//        } catch (IOException e) {
+//            Ui.printReadFileError(); //Input file has an error
+//        }
+//        return entireList;
+//    }
 
-        } catch (IOException e) {
-            Ui.printWriteFileError();
-        }
-    }
+//    public static void writeFile(ArrayList<Task> entireList) {
+//        try {
+//            executeWriteFile(filePath, entireList);
+//
+//        } catch (IOException e) {
+//            Ui.printWriteFileError();
+//        }
+//    }
 
-    public static int executeReadFile(ArrayList<Task> entireList,
-                                    int numberOfTasks) throws IOException {
+    public static ArrayList<Task> readFile() throws IOException {
+        ArrayList<Task> entireList = new ArrayList<>();
+        int numberOfTasks = 0;
+
         try {
             Files.createDirectories(Paths.get(directoryPath));
             Files.createFile(Path.of(filePath));
@@ -89,17 +98,22 @@ public class Storage {
             }
             numberOfTasks++;
         }
-        return numberOfTasks;
+        return entireList;
     }
 
-    public static void executeWriteFile(String filePath, ArrayList<Task> entireList) throws IOException {
-        FileWriter fw = new FileWriter(filePath);
-        for(Task item : entireList){
-            if(item != null) {
-                fw.write(item.toString() + System.lineSeparator());
+    public static void writeFile(ArrayList<Task> entireList) {
+        try {
+            FileWriter fw = new FileWriter(filePath);
+            for(int i=0; i<entireList.size(); i++){
+                if(entireList.get(i) != null) {
+                    fw.write(entireList.get(i).toString() + System.lineSeparator());
+                }
             }
-        }
-        fw.close();
-    }
+            fw.close();
 
+        } catch(IOException e) {
+            Ui.printWriteFileError();
+        }
+
+    }
 }
