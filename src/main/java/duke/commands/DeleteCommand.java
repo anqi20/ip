@@ -25,14 +25,14 @@ public class DeleteCommand extends Command {
      * @param storage storage of the tasks.
      */
     @Override
-    public void execute(TaskList task, Storage storage) {
+    public void execute(TaskList taskList, Storage storage) {
         try{
-            ArrayList<Task> entireList = task.getList();
-            int numberOfTasks = task.getSize();
+            ArrayList<Task> entireList = taskList.getList();
+            int numberOfTasks = taskList.getSize();
             int taskNum = Integer.parseInt(taskNumString.trim()) - 1;
 
             Task t = entireList.get(taskNum);
-            task.deleteTask(taskNum);
+            taskList.deleteTask(taskNum);
             numberOfTasks--;
 
             Ui.printDeleteTask(t.toString(), numberOfTasks);
@@ -46,7 +46,7 @@ public class DeleteCommand extends Command {
             Ui.printNumberNotInRange(task.getList());
         }
 
-        super.execute(task, storage);
+        super.execute(taskList, storage);
 
     }
 

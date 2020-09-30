@@ -17,7 +17,7 @@ public class BlahCommand extends Command {
      * @param storage storage of the tasks.
      */
     @Override
-    public void execute(TaskList task, Storage storage) {
+    public void execute(TaskList taskList, Storage storage) {
         Ui.printBlah();
     }
 

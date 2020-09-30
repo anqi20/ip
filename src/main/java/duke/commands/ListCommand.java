@@ -20,9 +20,9 @@ public class ListCommand extends Command {
      * @param storage storage of the tasks.
      */
     @Override
-    public void execute(TaskList task, Storage storage) {
-        int numberOfTasks = task.getSize();
-        ArrayList<Task> entireList = task.getList();
+    public void execute(TaskList taskList, Storage storage) {
+        int numberOfTasks = taskList.getSize();
+        ArrayList<Task> entireList = taskList.getList();
 
         if(numberOfTasks == 0) {
             Ui.printEmptyList();
@@ -30,7 +30,7 @@ public class ListCommand extends Command {
             Ui.printList(entireList);
         }
 
-        super.execute(task, storage);
+        super.execute(taskList, storage);
     }
 
 }

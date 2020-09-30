@@ -23,14 +23,14 @@ public class TodoCommand extends Command {
      * @param storage storage of the tasks.
      */
     @Override
-    public void execute(TaskList task, Storage storage) {
-        int numberOfTasks = task.getSize();
+    public void execute(TaskList taskList, Storage storage) {
+        int numberOfTasks = taskList.getSize();
 
         try {
-            String userCommandName = userCommand.substring(Constants.LENGTH_OF_TODO +1).trim();
+            String userCommandDescription = userCommand.substring(Constants.LENGTH_OF_TODO +1).trim();
 
-            ToDos t = new ToDos(userCommandName);
-            task.addTask(t);
+            ToDos t = new ToDos(userCommandDescription);
+            taskList.addTask(t);
             numberOfTasks++;
             Ui.printAddTask(t.toString(), numberOfTasks);
 
@@ -39,7 +39,7 @@ public class TodoCommand extends Command {
             Ui.printFormattingInvalid();
         }
 
-        super.execute(task, storage);
+        super.execute(taskList, storage);
     }
 
 }

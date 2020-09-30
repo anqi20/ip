@@ -28,10 +28,11 @@ public class EventCommand extends Command {
 
         try {
             int dividerPosition = userCommand.indexOf(Constants.COMMAND_EVENT_AT);
-            String userCommandName = userCommand.substring(Constants.LENGTH_OF_EVENT +1, dividerPosition).trim();
-            String userCommandBy = userCommand.substring(dividerPosition + Constants.LENGTH_OF_BY +1).trim();
+            String userCommandDescription =
+                    userCommand.substring(Constants.LENGTH_OF_EVENT +1, dividerPosition).trim();
+            String userCommandBy = userCommand.substring(dividerPosition + Constants.LENGTH_OF_AT +1).trim();
 
-            Events e = new Events(userCommandName, userCommandBy);
+            Events e = new Events(userCommandDescription, userCommandBy);
             task.addTask(e);
             numberOfTasks++;
             Ui.printAddTask(e.toString(), numberOfTasks);

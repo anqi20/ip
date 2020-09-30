@@ -167,8 +167,16 @@ public class Ui {
         System.out.println("5) deadline ... /by ...");
         System.out.println("6) done ...");
         System.out.println("7) delete ... ");
-        System.out.println("8) help");
-        System.out.println("9) bye");
+        System.out.println("8) find ...");
+        System.out.println("9) help");
+        System.out.println("10) bye");
+        printDashLine();
+    }
+
+    public static void printFind(ArrayList<Task> list) {
+        printDashLine();
+        System.out.println("Here are the matching tasks in your list: ");
+        printEntireList(list);
         printDashLine();
     }
 

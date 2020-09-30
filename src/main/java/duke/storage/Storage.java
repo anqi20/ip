@@ -29,6 +29,7 @@ public class Storage {
         Storage.directoryPath = directoryPath;
     }
 
+
     /**
      * Reads the text file and loads the content to array list.
      *
@@ -64,7 +65,8 @@ public class Storage {
 
                 int dividerPosition = line.indexOf(Constants.PRINT_EVENT_AT);
                 String userCommandName = line.substring(Constants.LENGTH_OF_INPUT_FORMAT +1, dividerPosition).trim();
-                String userCommandBy = line.substring(dividerPosition + Constants.LENGTH_OF_BY +1, line.length()-1).trim();
+                String userCommandBy =
+                        line.substring(dividerPosition + Constants.LENGTH_OF_AT +1, line.length()-1).trim();
                 Events e = new Events(userCommandName, userCommandBy);
                 entireList.add(numberOfTasks, e);
 
@@ -72,7 +74,8 @@ public class Storage {
 
                 int dividerPosition = line.indexOf(Constants.PRINT_DEADLINE_BY);
                 String userCommandName = line.substring(Constants.LENGTH_OF_INPUT_FORMAT +1, dividerPosition).trim();
-                String userCommandBy = line.substring(dividerPosition + Constants.LENGTH_OF_BY +1, line.length()-1).trim();
+                String userCommandBy =
+                        line.substring(dividerPosition + Constants.LENGTH_OF_BY +1, line.length()-1).trim();
                 Deadline d = new Deadline(userCommandName, userCommandBy);
                 entireList.add(numberOfTasks, d);
 
@@ -106,6 +109,5 @@ public class Storage {
         } catch(IOException e) {
             Ui.printWriteFileError();
         }
-
     }
 }
