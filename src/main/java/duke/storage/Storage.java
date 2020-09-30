@@ -3,7 +3,6 @@ package duke.storage;
 import duke.constants.Constants;
 import duke.task.Deadline;
 import duke.task.Events;
-import duke.parser.Parser;
 import duke.task.Task;
 import duke.task.ToDos;
 import duke.ui.Ui;
@@ -18,15 +17,25 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Manages the reading of text file and writing into the text file.
+ */
 public class Storage {
-    public static String filePath;
-    public static String directoryPath;
+    private static String filePath;
+    private static String directoryPath;
 
     public Storage(String filePath, String directoryPath) {
         Storage.filePath = filePath;
         Storage.directoryPath = directoryPath;
     }
 
+
+    /**
+     * Reads the text file and loads the content to array list.
+     *
+     * @return taskList containing the tasks that are written in the text file.
+     * @throws IOException If there is an error occurred when reading the text file.
+     */
     public static ArrayList<Task> readFile() throws IOException {
         ArrayList<Task> entireList = new ArrayList<>();
         int numberOfTasks = 0;
@@ -82,6 +91,11 @@ public class Storage {
         return entireList;
     }
 
+    /**
+     * Writes the tasks in the array list into the text file.
+     *
+     * @param entireList taskList with all the tasks.
+     */
     public static void writeFile(ArrayList<Task> entireList) {
         try {
             FileWriter fw = new FileWriter(filePath);
@@ -95,6 +109,5 @@ public class Storage {
         } catch(IOException e) {
             Ui.printWriteFileError();
         }
-
     }
 }

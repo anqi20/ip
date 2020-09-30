@@ -1,12 +1,29 @@
 package duke.parser;
 
-import duke.commands.*;
+import duke.commands.BlahCommand;
+import duke.commands.Command;
+import duke.commands.DeadlineCommand;
+import duke.commands.DeleteCommand;
+import duke.commands.DoneCommand;
+import duke.commands.EventCommand;
+import duke.commands.ExitCommand;
+import duke.commands.HelpCommand;
+import duke.commands.ListCommand;
+import duke.commands.TodoCommand;
 import duke.constants.Constants;
-import duke.exception.DukeException;
 
+/**
+ * Processes and understanding the user's commands.
+ */
 public class Parser {
 
-    public static Command processUserCommand(String userCommand) throws DukeException {
+    /**
+     * Processes the input from the user.
+     *
+     * @param userCommand input from the user.
+     * @return command to be executed.
+     */
+    public static Command processUserCommand(String userCommand) {
         String command = getCommand(userCommand);
 
         switch(command.toLowerCase()) {
@@ -46,7 +63,13 @@ public class Parser {
 
     }
 
-    public static String getCommand(String userCommand) {
+    /**
+     * Get the command word of the user.
+     *
+     * @param userCommand input from the user.
+     * @return String with command, without the task description.
+     */
+    private static String getCommand(String userCommand) {
         String[] command = userCommand.split(" ");
 
         return command[0];

@@ -8,13 +8,22 @@ import duke.ui.Ui;
 
 import java.util.ArrayList;
 
+/**
+ * Represents class that handles the delete command.
+ */
 public class DeleteCommand extends Command {
-    public String taskNumString;
+    public final String taskNumString;
 
     public DeleteCommand(String userCommand) {
         taskNumString = userCommand.substring(Constants.LENGTH_OF_DELETE);
     }
 
+    /**
+     * Executes the deletion of a task.
+     *
+     * @param task taskList that contains the entire list of tasks.
+     * @param storage storage of the tasks.
+     */
     @Override
     public void execute(TaskList taskList, Storage storage) {
         try{
@@ -29,10 +38,12 @@ public class DeleteCommand extends Command {
             Ui.printDeleteTask(t.toString(), numberOfTasks);
 
         } catch (StringIndexOutOfBoundsException | NumberFormatException e) {
-            Ui.printFormattingInvalid(); //Wrong formatting was given
+            //Wrong formatting was given
+            Ui.printFormattingInvalid();
 
         } catch (IndexOutOfBoundsException e) {
-            Ui.printNumberNotInRange(taskList.getList()); //Number task has exceeded the range
+            //Number task has exceeded the range of the number of tasks in the taskList
+            Ui.printNumberNotInRange(task.getList());
         }
 
         super.execute(taskList, storage);
