@@ -2,8 +2,10 @@ package duke.constants;
 
 public class Constants {
 
-    public static final int LENGTH_OF_BY = 3; // or LENGTH_OF_AT
+    public static final int LENGTH_OF_BY = 3;
+    public static final int LENGTH_OF_AT = 3;
     public static final int LENGTH_OF_DONE = 4;
+    public static final int LENGTH_OF_FIND = 4;
     public static final int LENGTH_OF_DELETE = 6;
     public static final int LENGTH_OF_TODO = 4;
     public static final int LENGTH_OF_EVENT = 5;
@@ -16,6 +18,7 @@ public class Constants {
     public static final String COMMAND_BYE = "bye";
     public static final String COMMAND_DELETE = "delete";
     public static final String COMMAND_DONE = "done";
+    public static final String COMMAND_FIND = "find";
     public static final String COMMAND_HELP = "help";
     public static final String COMMAND_LIST = "list";
     public static final String COMMAND_TODO = "todo";

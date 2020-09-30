@@ -18,8 +18,8 @@ public class DoneCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList task, Storage storage) {
-        ArrayList<Task> entireList = task.getList();
+    public void execute(TaskList taskList, Storage storage) {
+        ArrayList<Task> entireList = taskList.getList();
 
         try {
             int taskNum = Integer.parseInt(taskNumString.trim()) - 1;
@@ -40,7 +40,7 @@ public class DoneCommand extends Command {
         }
 
 
-        super.execute(task, storage);
+        super.execute(taskList, storage);
 
     }
 

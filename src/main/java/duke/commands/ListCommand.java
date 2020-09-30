@@ -10,9 +10,9 @@ import java.util.ArrayList;
 public class ListCommand extends Command {
 
     @Override
-    public void execute(TaskList task, Storage storage) {
-        int numberOfTasks = task.getSize();
-        ArrayList<Task> entireList = task.getList();
+    public void execute(TaskList taskList, Storage storage) {
+        int numberOfTasks = taskList.getSize();
+        ArrayList<Task> entireList = taskList.getList();
 
         if(numberOfTasks == 0) {
             Ui.printEmptyList();
@@ -20,7 +20,7 @@ public class ListCommand extends Command {
             Ui.printCurrentList(entireList);
         }
 
-        super.execute(task, storage);
+        super.execute(taskList, storage);
     }
 
 }

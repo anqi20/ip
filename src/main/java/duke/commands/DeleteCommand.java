@@ -16,14 +16,14 @@ public class DeleteCommand extends Command {
     }
 
     @Override
-    public void execute(TaskList task, Storage storage) {
+    public void execute(TaskList taskList, Storage storage) {
         try{
-            ArrayList<Task> entireList = task.getList();
-            int numberOfTasks = task.getSize();
+            ArrayList<Task> entireList = taskList.getList();
+            int numberOfTasks = taskList.getSize();
             int taskNum = Integer.parseInt(taskNumString.trim()) - 1;
 
             Task t = entireList.get(taskNum);
-            task.deleteTask(taskNum);
+            taskList.deleteTask(taskNum);
             numberOfTasks--;
 
             Ui.printDeleteTask(t.toString(), numberOfTasks);
@@ -32,10 +32,10 @@ public class DeleteCommand extends Command {
             Ui.printFormattingInvalid(); //Wrong formatting was given
 
         } catch (IndexOutOfBoundsException e) {
-            Ui.printNumberNotInRange(task.getList()); //Number task has exceeded the range
+            Ui.printNumberNotInRange(taskList.getList()); //Number task has exceeded the range
         }
 
-        super.execute(task, storage);
+        super.execute(taskList, storage);
 
     }
 

@@ -27,27 +27,6 @@ public class Storage {
         Storage.directoryPath = directoryPath;
     }
 
-//    public static ArrayList<Task> readFile(Parser parser) {
-//        ArrayList<Task> entireList = new ArrayList<>();
-//
-//        try {
-//            entireList = executeReadFile(parser);
-//
-//        } catch (IOException e) {
-//            Ui.printReadFileError(); //Input file has an error
-//        }
-//        return entireList;
-//    }
-
-//    public static void writeFile(ArrayList<Task> entireList) {
-//        try {
-//            executeWriteFile(filePath, entireList);
-//
-//        } catch (IOException e) {
-//            Ui.printWriteFileError();
-//        }
-//    }
-
     public static ArrayList<Task> readFile() throws IOException {
         ArrayList<Task> entireList = new ArrayList<>();
         int numberOfTasks = 0;
@@ -77,7 +56,8 @@ public class Storage {
 
                 int dividerPosition = line.indexOf(Constants.PRINT_EVENT_AT);
                 String userCommandName = line.substring(Constants.LENGTH_OF_INPUT_FORMAT +1, dividerPosition).trim();
-                String userCommandBy = line.substring(dividerPosition + Constants.LENGTH_OF_BY +1, line.length()-1).trim();
+                String userCommandBy =
+                        line.substring(dividerPosition + Constants.LENGTH_OF_AT +1, line.length()-1).trim();
                 Events e = new Events(userCommandName, userCommandBy);
                 entireList.add(numberOfTasks, e);
 
@@ -85,7 +65,8 @@ public class Storage {
 
                 int dividerPosition = line.indexOf(Constants.PRINT_DEADLINE_BY);
                 String userCommandName = line.substring(Constants.LENGTH_OF_INPUT_FORMAT +1, dividerPosition).trim();
-                String userCommandBy = line.substring(dividerPosition + Constants.LENGTH_OF_BY +1, line.length()-1).trim();
+                String userCommandBy =
+                        line.substring(dividerPosition + Constants.LENGTH_OF_BY +1, line.length()-1).trim();
                 Deadline d = new Deadline(userCommandName, userCommandBy);
                 entireList.add(numberOfTasks, d);
 
