@@ -43,7 +43,7 @@ public class DeleteCommand extends Command {
 
         } catch (IndexOutOfBoundsException e) {
             //Number task has exceeded the range of the number of tasks in the taskList
-            Ui.printNumberNotInRange(task.getList());
+            Ui.printNumberNotInRange(taskList.getList());
         }
 
         super.execute(taskList, storage);

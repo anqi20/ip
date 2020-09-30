@@ -50,7 +50,7 @@ public class DoneCommand extends Command {
             Ui.printNumberNotInRange(entireList);
         }
 
-        super.execute(task, storage);
+        super.execute(taskList, storage);
     }
 
 }
