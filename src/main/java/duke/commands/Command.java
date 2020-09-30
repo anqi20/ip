@@ -1,7 +1,7 @@
 package duke.commands;
 
+import duke.storage.Storage;
 import duke.task.TaskList;
-import duke.ui.Ui;
 
 public abstract class Command {
     boolean isExit = false;
@@ -10,6 +10,7 @@ public abstract class Command {
         return isExit;
     }
 
-    public abstract void execute(TaskList task, Ui ui);
-
+    public void execute(TaskList task, Storage storage) {
+        storage.writeFile(task.getList());
+    }
 }

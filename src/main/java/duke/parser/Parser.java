@@ -2,19 +2,25 @@ package duke.parser;
 
 import duke.commands.*;
 import duke.constants.Constants;
+import duke.exception.DukeException;
 
 public class Parser {
 
-    public Command processUserCommand(String userCommand) {
+    public static Command processUserCommand(String userCommand) throws DukeException {
+        String command = getCommand(userCommand);
 
-        switch(userCommand.toLowerCase()) {
+        switch(command.toLowerCase()) {
             case Constants.COMMAND_LIST:
+                return new ListCommand();
 
             case Constants.COMMAND_DEADLINE:
+                return new DeadlineCommand(userCommand);
 
             case Constants.COMMAND_EVENT:
+                return new EventCommand(userCommand);
 
             case Constants.COMMAND_TODO:
+                return new TodoCommand(userCommand);
 
             case Constants.COMMAND_BLAH:
                 return new BlahCommand();
@@ -23,6 +29,7 @@ public class Parser {
                 return new ExitCommand();
 
             case Constants.COMMAND_DONE:
+                return new DoneCommand(userCommand);
 
             case Constants.COMMAND_DELETE:
                 return new DeleteCommand(userCommand);
@@ -33,6 +40,12 @@ public class Parser {
             default:
                 return new HelpCommand();
         }
+
     }
 
+    public static String getCommand(String userCommand) {
+        String[] command = userCommand.split(" ");
+
+        return command[0];
+    }
 }
