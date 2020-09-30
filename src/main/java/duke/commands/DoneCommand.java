@@ -9,14 +9,22 @@ import duke.ui.Ui;
 
 import java.util.ArrayList;
 
+/**
+ * Represents a class that handles the done command.
+ */
 public class DoneCommand extends Command {
-    public String taskNumString;
+    private final String taskNumString;
 
     public DoneCommand(String userCommand) {
         taskNumString = userCommand.substring(Constants.LENGTH_OF_DONE);
-
     }
 
+    /**
+     * Executes the method to mark the task as done.
+     *
+     * @param task taskList that contains the entire list of tasks.
+     * @param storage storage of the tasks.
+     */
     @Override
     public void execute(TaskList task, Storage storage) {
         ArrayList<Task> entireList = task.getList();
@@ -30,15 +38,17 @@ public class DoneCommand extends Command {
             Ui.printDone(entireList, taskNum);
 
         } catch (DukeException e) {
-            Ui.printDoneWhenDone(entireList); //Task has already been completed
+            //Task has already been completed
+            Ui.printDoneWhenDone(entireList);
 
         } catch (NumberFormatException e) {
-            Ui.printFormattingInvalid(); //Number task was not given
+            //Number task was not given
+            Ui.printFormattingInvalid();
 
         } catch (IndexOutOfBoundsException e) {
-            Ui.printNumberNotInRange(entireList); //Number task has exceeded the range
+            //Number task has exceeded the range
+            Ui.printNumberNotInRange(entireList);
         }
-
 
         super.execute(task, storage);
 

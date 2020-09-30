@@ -6,13 +6,22 @@ import duke.task.Deadline;
 import duke.task.TaskList;
 import duke.ui.Ui;
 
+/**
+ * Represents class that handles the deadline command.
+ */
 public class DeadlineCommand extends Command {
-    String userCommand;
+    private final String userCommand;
 
     public DeadlineCommand(String userCommand) {
         this.userCommand = userCommand;
     }
 
+    /**
+     * Executes the adding of the deadline task.
+     *
+     * @param task taskList that contains the entire list of tasks.
+     * @param storage storage of the tasks.
+     */
     @Override
     public void execute(TaskList task, Storage storage) {
         int numberOfTasks = task.getSize();
@@ -28,7 +37,8 @@ public class DeadlineCommand extends Command {
             Ui.printAddTask(d.toString(), numberOfTasks);
 
         } catch (StringIndexOutOfBoundsException e){
-            Ui.printFormattingInvalid(); //Wrong formatting was given
+            //Wrong formatting was given
+            Ui.printFormattingInvalid();
         }
 
         super.execute(task, storage);

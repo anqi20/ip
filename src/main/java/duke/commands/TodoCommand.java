@@ -6,13 +6,22 @@ import duke.task.TaskList;
 import duke.task.ToDos;
 import duke.ui.Ui;
 
+/**
+ * Represents class that handles the todo command.
+ */
 public class TodoCommand extends Command {
-    public String userCommand;
+    private final String userCommand;
 
     public TodoCommand(String userCommand) {
         this.userCommand = userCommand;
     }
 
+    /**
+     * Executes the adding of the todo task.
+     *
+     * @param task taskList that contains the entire list of tasks.
+     * @param storage storage of the tasks.
+     */
     @Override
     public void execute(TaskList task, Storage storage) {
         int numberOfTasks = task.getSize();
@@ -26,10 +35,8 @@ public class TodoCommand extends Command {
             Ui.printAddTask(t.toString(), numberOfTasks);
 
         } catch (StringIndexOutOfBoundsException e){
-            Ui.printFormattingInvalid(); //Wrong formatting was given
-
-        } catch (NullPointerException e) {
-            Ui.printNumberNotInRange(task.getList()); //Number task has exceeded the range
+            //Wrong formatting was given
+            Ui.printFormattingInvalid();
         }
 
         super.execute(task, storage);

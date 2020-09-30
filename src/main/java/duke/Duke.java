@@ -1,7 +1,6 @@
 package duke;
 
 import duke.commands.Command;
-import duke.exception.DukeException;
 import duke.parser.Parser;
 import duke.storage.Storage;
 import duke.task.TaskList;
@@ -10,6 +9,10 @@ import duke.ui.Ui;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Duke Class.
+ * Greet user and process the user's commands.
+ */
 public class Duke {
     public static boolean isExit = false;
     public final String filePath = "data/duke.txt";
@@ -19,7 +22,7 @@ public class Duke {
     private final Storage storage;
     private TaskList tasks;
 
-    public Duke() {
+    private Duke() {
         parser = new Parser();
         storage = new Storage(filePath, directoryPath);
         try {
@@ -30,22 +33,17 @@ public class Duke {
         }
     }
 
-    public void run() {
+    private void run() {
         Ui.printGreetings();
 
         while(!isExit) {
-            try {
-                Scanner in = new Scanner(System.in);
-                String userInput = in.nextLine();
-                String userCommand = userInput.trim();
+            Scanner in = new Scanner(System.in);
+            String userInput = in.nextLine();
+            String userCommand = userInput.trim();
 
-                Command c = Parser.processUserCommand(userCommand);
-                c.execute(tasks, storage);
-                isExit = c.isExit();
-
-            } catch (DukeException e) {
-                System.out.println("Something is wrong! GG ");
-            }
+            Command c = Parser.processUserCommand(userCommand);
+            c.execute(tasks, storage);
+            isExit = c.isExit();
         }
     }
 
