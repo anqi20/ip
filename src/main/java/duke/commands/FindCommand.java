@@ -8,6 +8,9 @@ import duke.ui.Ui;
 
 import java.util.ArrayList;
 
+/**
+ * Represents class that handles the find command.
+ */
 public class FindCommand extends Command {
     public String userCommand;
 
@@ -15,6 +18,13 @@ public class FindCommand extends Command {
         this.userCommand = userCommand;
     }
 
+    /**
+     * Executes the find command to search for keywords in the entire list.
+     * Returns those tasks that contain the keywords (if any).
+     *
+     * @param taskList
+     * @param storage storage of the tasks.
+     */
     @Override
     public void execute(TaskList taskList, Storage storage) {
         int numberOfTasks = taskList.getSize();
