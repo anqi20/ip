@@ -37,6 +37,9 @@ public class Parser {
             case Constants.COMMAND_HELP:
                 return new HelpCommand();
 
+            case Constants.COMMAND_FIND:
+                return new FindCommand(userCommand);
+
             default:
                 return new HelpCommand();
         }

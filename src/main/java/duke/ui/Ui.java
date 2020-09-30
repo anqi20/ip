@@ -112,8 +112,16 @@ public class Ui {
         System.out.println("5) deadline ... /by ...");
         System.out.println("6) done ...");
         System.out.println("7) delete ... ");
-        System.out.println("8) help");
-        System.out.println("9) bye");
+        System.out.println("8) find ...");
+        System.out.println("9) help");
+        System.out.println("10) bye");
+        printDashLine();
+    }
+
+    public static void printFind(ArrayList<Task> list) {
+        printDashLine();
+        System.out.println("Here are the matching tasks in your list: ");
+        printEntireList(list);
         printDashLine();
     }
 
@@ -152,11 +160,9 @@ public class Ui {
         printDashLine();
     }
 
-    public static void printErrorMessage(String errorCommand) {
+    public static void printErrorMessage() {
         printDashLine();
-        System.out.print("Something went wrong when saving the results of your \"");
-        System.out.print(errorCommand);
-        System.out.println("\" command. ");
+        System.out.print("Something went wrong.");
         System.out.println("Please check again! ");
         printDashLine();
     }

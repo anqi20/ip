@@ -7,7 +7,7 @@ import duke.ui.Ui;
 public class HelpCommand extends Command{
 
     @Override
-    public void execute(TaskList task, Storage storage) {
+    public void execute(TaskList taskList, Storage storage) {
         Ui.printHelp();
     }
 

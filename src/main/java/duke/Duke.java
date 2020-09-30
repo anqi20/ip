@@ -44,7 +44,7 @@ public class Duke {
                 isExit = c.isExit();
 
             } catch (DukeException e) {
-                System.out.println("Something is wrong! GG ");
+                Ui.printErrorMessage();
             }
         }
     }
