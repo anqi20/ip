@@ -19,12 +19,12 @@ public class EventCommand extends Command {
     /**
      * Executes the adding of the event task.
      *
-     * @param task taskList that contains the entire list of tasks.
+     * @param taskList that contains the entire list of tasks.
      * @param storage storage of the tasks.
      */
     @Override
-    public void execute(TaskList task, Storage storage) {
-        int numberOfTasks = task.getSize();
+    public void execute(TaskList taskList, Storage storage) {
+        int numberOfTasks = taskList.getSize();
 
         try {
             int dividerPosition = userCommand.indexOf(Constants.COMMAND_EVENT_AT);
@@ -33,7 +33,7 @@ public class EventCommand extends Command {
             String userCommandBy = userCommand.substring(dividerPosition + Constants.LENGTH_OF_AT +1).trim();
 
             Events e = new Events(userCommandDescription, userCommandBy);
-            task.addTask(e);
+            taskList.addTask(e);
             numberOfTasks++;
             Ui.printAddTask(e.toString(), numberOfTasks);
 
@@ -42,7 +42,7 @@ public class EventCommand extends Command {
             Ui.printFormattingInvalid();
         }
 
-        super.execute(task, storage);
+        super.execute(taskList, storage);
 
     }
 

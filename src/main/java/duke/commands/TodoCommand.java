@@ -19,7 +19,7 @@ public class TodoCommand extends Command {
     /**
      * Executes the adding of the todo task.
      *
-     * @param task taskList that contains the entire list of tasks.
+     * @param taskList that contains the entire list of tasks.
      * @param storage storage of the tasks.
      */
     @Override

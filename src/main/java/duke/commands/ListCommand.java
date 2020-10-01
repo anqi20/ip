@@ -16,7 +16,7 @@ public class ListCommand extends Command {
      * Executes the listing of the entire list stored in the text file.
      * Prints out the entire taskList.
      *
-     * @param task taskList that contains the entire list of tasks.
+     * @param taskList that contains the entire list of tasks.
      * @param storage storage of the tasks.
      */
     @Override

@@ -13,7 +13,7 @@ public class HelpCommand extends Command{
      * Execute the help command.
      * Printing out the entire list of command that can be used by the user.
      *
-     * @param task taskList that contains the entire list of tasks.
+     * @param taskList that contains the entire list of tasks.
      * @param storage storage of the tasks.
      */
     @Override

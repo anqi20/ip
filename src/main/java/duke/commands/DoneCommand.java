@@ -22,7 +22,7 @@ public class DoneCommand extends Command {
     /**
      * Executes the method to mark the task as done.
      *
-     * @param task taskList that contains the entire list of tasks.
+     * @param taskList that contains the entire list of tasks.
      * @param storage storage of the tasks.
      */
     @Override

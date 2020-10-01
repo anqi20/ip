@@ -22,7 +22,7 @@ public class FindCommand extends Command {
      * Executes the find command to search for keywords in the entire list.
      * Returns those tasks that contain the keywords (if any).
      *
-     * @param taskList
+     * @param taskList that contains the entire list of tasks.
      * @param storage storage of the tasks.
      */
     @Override

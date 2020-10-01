@@ -16,7 +16,7 @@ public class ExitCommand extends Command {
     /**
      * Exit the program.
      *
-     * @param task taskList that contains the entire list of tasks.
+     * @param taskList that contains the entire list of tasks.
      * @param storage storage of the tasks.
      */
     @Override

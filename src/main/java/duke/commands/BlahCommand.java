@@ -13,7 +13,7 @@ public class BlahCommand extends Command {
      * Executes the blah command.
      * Printing out the user interface of the blah command. 
      *
-     * @param task taskList that contains the entire list of tasks.
+     * @param taskList that contains the entire list of tasks.
      * @param storage storage of the tasks.
      */
     @Override
