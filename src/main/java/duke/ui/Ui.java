@@ -173,10 +173,25 @@ public class Ui {
         printDashLine();
     }
 
+    /**
+     * Prints the message when the user finds certain keywords.
+     * Prints the list of tasks which contains the keywords.
+     *
+     * @param list of tasks which contains the keywords.
+     */
     public static void printFind(ArrayList<Task> list) {
         printDashLine();
         System.out.println("Here are the matching tasks in your list: ");
         printEntireList(list);
+        printDashLine();
+    }
+
+    /**
+     * Prints the message when all the tasks do not contain the keywords.
+     */
+    public static void printFindNothing() {
+        printDashLine();
+        System.out.println("There is no matching task in your list. ");
         printDashLine();
     }
 

@@ -27,20 +27,26 @@ public class FindCommand extends Command {
      */
     @Override
     public void execute(TaskList taskList, Storage storage) {
-        int numberOfTasks = taskList.getSize();
+        int numberOfTasks = 0;
         ArrayList<Task> currentList = new ArrayList<>();
 
         try {
             String userCommandDescription = userCommand.substring(Constants.LENGTH_OF_FIND+1).trim();
 
-            for(int i=0; i<numberOfTasks; i++) {
+            for(int i=0; i<taskList.getSize(); i++) {
                 Task task = taskList.get(i);
 
                 if(task.getDescription().contains(userCommandDescription)) {
                     currentList.add(task);
+                    numberOfTasks++;
                 }
             }
-            Ui.printFind(currentList);
+
+            if(numberOfTasks == 0) {
+                Ui.printFindNothing();
+            } else {
+                Ui.printFind(currentList);
+            }
 
         } catch (StringIndexOutOfBoundsException e) {
             Ui.printFormattingInvalid(); //Wrong formatting was given

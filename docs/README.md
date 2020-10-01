@@ -11,9 +11,12 @@ Prerequisites: Java 11.
 3. Go into the directory containing the ip.jar file. 
     1. Use `cd` to enter the directory. 
     2. Use `ls` or `dir` to list all the files in the specific directory. 
-4. Type `java -jar ip.jar` into the command prompt. 
-5. Enter to start the program. 
+4. Type `chcp 65001` into the command prompt. 
+5. Press enter at the command prompt. 
+6. Type `java -Dfile.encoding=UTF-8 -jar ip.jar` into the command prompt. 
+7. Press enter to start the program. 
 
+> Note: If the status icons appear as ? instead of ✓ or ✘, change the font of the command promp to NSimSun. 
 
    ```
    Hello from
