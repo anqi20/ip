@@ -10,7 +10,7 @@ Prerequisites: Java 11.
 2. Open the command prompt. 
 3. Go into the directory containing the ip.jar file. 
     1. Use `cd` to enter the directory. 
-    2. Use `ls` to list all the files in the specific directory. 
+    2. Use `ls` or `dir` to list all the files in the specific directory. 
 4. Type `java -jar ip.jar` into the command prompt. 
 5. Enter to start the program. 
 
